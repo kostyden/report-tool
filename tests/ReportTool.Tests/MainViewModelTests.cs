@@ -3,27 +3,31 @@
     using FluentAssertions;
     using NSubstitute;
     using NUnit.Framework;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     [TestFixture]
     class MainViewModelTests
     {
+        private IDataProvider _fakeProvider;
+
+        private MainViewModel _viewModel;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _fakeProvider = Substitute.For<IDataProvider>();
+            _viewModel = new MainViewModel(_fakeProvider);
+        }
+
         [Test]
         public void Columns_ShouldBeEmptyAfterInitialization()
         {
-            var fakeProvider = Substitute.For<IDataProvider>();
-            var viewmodel = new MainViewModel(fakeProvider);
-
-            viewmodel.Columns.Should().BeEmpty();
+            _viewModel.Columns.Should().BeEmpty();
         }
 
         [Test]
         public void Columns_ShouldContainLoadedColumnsAfterSuccessfulExecutingLoadDataCommand()
         {
-            var fakeProvider= Substitute.For<IDataProvider>();
-            var viewmodel = new MainViewModel(fakeProvider);
             var validPath = @"somefile.xls";
             var loadedData = new[]
             {
@@ -31,30 +35,28 @@
                 new Dictionary<string, double> { { "one", 1.0 }, { "two", 128.7 } },
                 new Dictionary<string, double> { { "one", 3.14 }, { "two", 0.123 } }
             };
-            fakeProvider.GetFrom(validPath).Returns(loadedData);
+            _fakeProvider.GetFrom(validPath).Returns(loadedData);
             var expectedColumns = new[] { "one", "two" };
 
-            viewmodel.LoadDataCommand.Execute(validPath);
+            _viewModel.LoadDataCommand.Execute(validPath);
 
-            viewmodel.Columns.ShouldBeEquivalentTo(expectedColumns);
+            _viewModel.Columns.ShouldBeEquivalentTo(expectedColumns);
         }
 
         [Test]
         public void Columns_ShouldRaisePropertyChangedEventAfterSuccessfulExecutingLoadDataCommand()
         {
-            var fakeProvider = Substitute.For<IDataProvider>();
-            var viewmodel = new MainViewModel(fakeProvider);
             var validPath = @"somefile.xls";
             var loadedData = new[]
             {
                 new Dictionary<string, double> { { "three", 1.23 }, { "five", 4.785 }, { "two", 42 } }
             };
-            fakeProvider.GetFrom(validPath).Returns(loadedData);
-            viewmodel.MonitorEvents();
+            _fakeProvider.GetFrom(validPath).Returns(loadedData);
+            _viewModel.MonitorEvents();
 
-            viewmodel.LoadDataCommand.Execute(validPath);
+            _viewModel.LoadDataCommand.Execute(validPath);
 
-            viewmodel.ShouldRaisePropertyChangeFor(viewModel => viewModel.Columns);
+            _viewModel.ShouldRaisePropertyChangeFor(viewModel => viewModel.Columns);
         }
     }
 }

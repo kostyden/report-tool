@@ -14,6 +14,7 @@
         public event PropertyChangedEventHandler PropertyChanged;
 
         private ReadOnlyCollection<string> _columns;
+
         public ReadOnlyCollection<string> Columns
         {
             get
