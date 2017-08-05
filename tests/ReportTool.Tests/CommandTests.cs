@@ -69,5 +69,56 @@
 
             actualPatameter.Should().Be(expectedParameter);
         }
+
+        [Test]
+        public void RaiseCanExecuteChanged_ShouldRaiseCanExecuteEvent()
+        {
+            Action<object> fakeAction = param => { };
+            Func<object, bool> fakePredicate = param => true;
+            var command = new Command(fakeAction, fakePredicate);
+            command.MonitorEvents();
+
+            command.RaiseCanExecuteChanged();
+
+            command.ShouldRaise(nameof(command.CanExecuteChanged));
+        }
+
+        [Test]
+        public void RaiseCanExecuteChanged_ShouldRaiseCanExecuteEventWithItselfAsSender()
+        {
+            Action<object> fakeAction = param => { };
+            Func<object, bool> fakePredicate = param => true;
+            var command = new Command(fakeAction, fakePredicate);
+            command.MonitorEvents();
+
+            command.RaiseCanExecuteChanged();
+
+            command.ShouldRaise(nameof(command.CanExecuteChanged)).WithSender(command);
+        }
+
+        [Test]
+        public void RaiseCanExecuteChanged_ShouldRaiseCanExecuteEventWithEmptyArgs()
+        {
+            Action<object> fakeAction = param => { };
+            Func<object, bool> fakePredicate = param => true;
+            var command = new Command(fakeAction, fakePredicate);
+            command.MonitorEvents();
+
+            command.RaiseCanExecuteChanged();
+
+            command.ShouldRaise(nameof(command.CanExecuteChanged)).WithArgs<EventArgs>();
+        }
+
+        [Test]
+        public void RaiseCanExecuteChanged_ShouldNotThrowWhenEventIsNull()
+        {
+            Action<object> fakeAction = param => { };
+            Func<object, bool> fakePredicate = param => true;
+            var command = new Command(fakeAction, fakePredicate);
+
+            Action raise = command.RaiseCanExecuteChanged;
+
+            raise.ShouldNotThrow<NullReferenceException>();
+        }
     }
 }
