@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command.cs" />
+    <Compile Include="IDataProvider.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Startup.cs" />
     <Page Include="MainWindow.xaml">
