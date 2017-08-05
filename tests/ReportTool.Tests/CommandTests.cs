@@ -7,14 +7,21 @@
     [TestFixture]
     public class CommandTests
     {
+        private CommandBuilder _commandBuilder;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _commandBuilder = new CommandBuilder();
+        }
+        
         [Test]
         public void Execute_ShouldExecuteActionProvidedDuringConstruction()
         {
             var isExecuted = false;
            var dummyParam = "dummy";
-            Action<object> fakeAction = param => isExecuted = true;
-            Func<object, bool> fakePredicate = param => true;
-            var command = new Command(fakeAction, fakePredicate);
+            Action<object> action = param => isExecuted = true;
+            var command = _commandBuilder.With(action).Build();
 
             command.Execute(dummyParam);
 
@@ -27,9 +34,8 @@
         public void Execute_ShouldPassGivenParameterToTheAction(object expectedParameter)
         {
             object actualPatameter = null;
-            Action<object> fakeAction = param => actualPatameter = param;
-            Func<object, bool> fakePredicate = param => true;
-            var command = new Command(fakeAction, fakePredicate);
+            Action<object> action = param => actualPatameter = param;
+            var command = _commandBuilder.With(action).Build();
 
             command.Execute(expectedParameter);
 
@@ -42,9 +48,8 @@
         public void CanExecute_ShouldReturnResultOfProvidedPredicate(bool expected)
         {
             var dummyParam = 42;
-            Action<object> fakeAction = param => { };
-            Func<object, bool> fakePredicate = param => expected;
-            var command = new Command(fakeAction, fakePredicate);
+            Func<object, bool> predicate = param => expected;
+            var command = _commandBuilder.With(predicate).Build();
 
             var actual = command.CanExecute(dummyParam);
 
@@ -57,13 +62,12 @@
         public void CanExecute_ShouldPassGivenParameterToThePredicate(object expectedParameter)
         {
             object actualPatameter = null;
-            Action<object> fakeAction = param => { };
-            Func<object, bool> fakePredicate = param =>
+            Func<object, bool> predicate = param =>
             {
                 actualPatameter = param;
                 return true;
             };
-            var command = new Command(fakeAction, fakePredicate);
+            var command = _commandBuilder.With(predicate).Build();
 
             command.CanExecute(expectedParameter);
 
@@ -73,9 +77,7 @@
         [Test]
         public void RaiseCanExecuteChanged_ShouldRaiseCanExecuteEvent()
         {
-            Action<object> fakeAction = param => { };
-            Func<object, bool> fakePredicate = param => true;
-            var command = new Command(fakeAction, fakePredicate);
+            var command = _commandBuilder.Build();
             command.MonitorEvents();
 
             command.RaiseCanExecuteChanged();
@@ -86,9 +88,7 @@
         [Test]
         public void RaiseCanExecuteChanged_ShouldRaiseCanExecuteEventWithItselfAsSender()
         {
-            Action<object> fakeAction = param => { };
-            Func<object, bool> fakePredicate = param => true;
-            var command = new Command(fakeAction, fakePredicate);
+            var command = _commandBuilder.Build();
             command.MonitorEvents();
 
             command.RaiseCanExecuteChanged();
@@ -99,9 +99,7 @@
         [Test]
         public void RaiseCanExecuteChanged_ShouldRaiseCanExecuteEventWithEmptyArgs()
         {
-            Action<object> fakeAction = param => { };
-            Func<object, bool> fakePredicate = param => true;
-            var command = new Command(fakeAction, fakePredicate);
+            var command = _commandBuilder.Build();
             command.MonitorEvents();
 
             command.RaiseCanExecuteChanged();
@@ -112,13 +110,41 @@
         [Test]
         public void RaiseCanExecuteChanged_ShouldNotThrowWhenEventIsNull()
         {
-            Action<object> fakeAction = param => { };
-            Func<object, bool> fakePredicate = param => true;
-            var command = new Command(fakeAction, fakePredicate);
+            var command = _commandBuilder.Build();
 
             Action raise = command.RaiseCanExecuteChanged;
 
             raise.ShouldNotThrow<NullReferenceException>();
+        }
+
+        private class CommandBuilder
+        {
+            private Action<object> _action;
+
+            private Func<object, bool> _predicate;
+
+            public CommandBuilder()
+            {
+                _action = param => { };
+                _predicate = param => true;
+            }
+
+            public CommandBuilder With(Action<object> action)
+            {
+                _action = action;
+                return this;
+            }
+
+            public CommandBuilder With(Func<object, bool> predicate)
+            {
+                _predicate = predicate;
+                return this;
+            }
+
+            public Command Build()
+            {
+                return new Command(_action, _predicate);
+            }
         }
     }
 }
