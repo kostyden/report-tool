@@ -14,6 +14,7 @@
     using TestStack.White.UIItems.WPFUIItems;
 
     [TestFixture]
+    [Category("Acceptence tests")]
     public class AcceptenceTests
     {
         [Test]
