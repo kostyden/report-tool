@@ -7,16 +7,19 @@
     {
         private readonly Action<object> _action;
 
+        private readonly Func<object, bool> _canExecute;
+
         public event EventHandler CanExecuteChanged;
 
-        public Command(Action<object> action)
+        public Command(Action<object> action, Func<object, bool> canExecute)
         {
             _action = action;
+            _canExecute = canExecute;
         }
 
         public bool CanExecute(object parameter)
         {
-            throw new NotImplementedException();
+            return _canExecute(parameter);
         }
 
         public void Execute(object parameter)

@@ -13,7 +13,8 @@
             var isExecuted = false;
            var dummyParam = "dummy";
             Action<object> fakeAction = param => isExecuted = true;
-            var command = new Command(fakeAction);
+            Func<object, bool> fakePredicate = param => true;
+            var command = new Command(fakeAction, fakePredicate);
 
             command.Execute(dummyParam);
 
@@ -27,9 +28,44 @@
         {
             object actualPatameter = null;
             Action<object> fakeAction = param => actualPatameter = param;
-            var command = new Command(fakeAction);
+            Func<object, bool> fakePredicate = param => true;
+            var command = new Command(fakeAction, fakePredicate);
 
             command.Execute(expectedParameter);
+
+            actualPatameter.Should().Be(expectedParameter);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void CanExecute_ShouldReturnResultOfProvidedPredicate(bool expected)
+        {
+            var dummyParam = 42;
+            Action<object> fakeAction = param => { };
+            Func<object, bool> fakePredicate = param => expected;
+            var command = new Command(fakeAction, fakePredicate);
+
+            var actual = command.CanExecute(dummyParam);
+
+            actual.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(34)]
+        public void CanExecute_ShouldPassGivenParameterToThePredicate(object expectedParameter)
+        {
+            object actualPatameter = null;
+            Action<object> fakeAction = param => { };
+            Func<object, bool> fakePredicate = param =>
+            {
+                actualPatameter = param;
+                return true;
+            };
+            var command = new Command(fakeAction, fakePredicate);
+
+            command.CanExecute(expectedParameter);
 
             actualPatameter.Should().Be(expectedParameter);
         }
