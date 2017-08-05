@@ -14,8 +14,13 @@
         </StackPanel>
         <DockPanel LastChildFill="True">
             <StackPanel DockPanel.Dock="Bottom" Height="32"></StackPanel>
-            <StackPanel DockPanel.Dock="Left" Width="200">
+            <StackPanel DockPanel.Dock="Left" MinWidth="200">
                 <TextBlock Text="Columns" Margin="10"/>
+                <ListBox AutomationProperties.AutomationId="columns" Margin="10">
+                    <ListBoxItem>id</ListBoxItem>
+                    <ListBoxItem>age</ListBoxItem>
+                    <ListBoxItem>weight</ListBoxItem>
+                </ListBox>
             </StackPanel>
             <DockPanel x:Name="chartArea">
 
