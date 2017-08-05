@@ -75,6 +75,19 @@
         }
 
         [Test]
+        [TestCase("")]
+        [TestCase(null)]
+        public void CanExecute_ShouldReturnTrueWhenCommandConstructedWithoneParameter(object dummyParameter)
+        {
+            Action<object> action = param => { };
+            var command = new Command(action);
+
+            var actual = command.CanExecute(dummyParameter);
+
+            actual.Should().BeTrue();
+        }
+
+        [Test]
         public void RaiseCanExecuteChanged_ShouldRaiseCanExecuteEvent()
         {
             var command = _commandBuilder.Build();

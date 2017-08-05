@@ -13,7 +13,6 @@
         public MainViewModel()
         {
             Columns = new ObservableCollection<string>();
-            
         }
     }
 }

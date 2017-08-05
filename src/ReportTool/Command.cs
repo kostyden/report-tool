@@ -11,6 +11,10 @@
 
         public event EventHandler CanExecuteChanged;
 
+        public Command(Action<object> action) : this(action, param => true)
+        {
+        }
+
         public Command(Action<object> action, Func<object, bool> canExecute)
         {
             _action = action;
