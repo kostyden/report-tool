@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReportTool"
         mc:Ignorable="d"
-        Title="Report tool" Height="350" Width="525">
+        Title="Report tool" Height="600" Width="800">
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <TextBlock VerticalAlignment="Center" Margin="10">File:</TextBlock>
@@ -16,7 +16,7 @@
             <StackPanel DockPanel.Dock="Bottom" Height="32"></StackPanel>
             <StackPanel DockPanel.Dock="Left" MinWidth="200">
                 <TextBlock Text="Columns" Margin="10"/>
-                <ListBox AutomationProperties.AutomationId="columns" Margin="10">
+                <ListBox AutomationProperties.AutomationId="columns" Margin="10" SelectionMode="Multiple">
                     <ListBoxItem>id</ListBoxItem>
                     <ListBoxItem>age</ListBoxItem>
                     <ListBoxItem>weight</ListBoxItem>
