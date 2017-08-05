@@ -1,0 +1,25 @@
+﻿<Window x:Class="ReportTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReportTool"
+        mc:Ignorable="d"
+        Title="Report tool" Height="350" Width="525">
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center" Margin="10">File:</TextBlock>
+            <TextBox AutomationProperties.AutomationId="filePath" Width="320" Margin="10"/>
+            <Button AutomationProperties.AutomationId="loadData" Content="Load" Margin="10" Padding="10, 2" />
+        </StackPanel>
+        <DockPanel LastChildFill="True">
+            <StackPanel DockPanel.Dock="Bottom" Height="32"></StackPanel>
+            <StackPanel DockPanel.Dock="Left" Width="200">
+                <TextBlock Text="Columns" Margin="10"/>
+            </StackPanel>
+            <DockPanel x:Name="chartArea">
+
+            </DockPanel>
+        </DockPanel>
+    </DockPanel>
+</Window>
