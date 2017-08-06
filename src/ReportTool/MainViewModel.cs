@@ -56,10 +56,7 @@
         {
             get
             {
-                return Columns.Where(column => column.SelectionType == SelectionType.Abscissa)
-                              .Select(column => column.Name)
-                              .DefaultIfEmpty("not selected")
-                              .First();
+                return GetColumnNameFor(SelectionType.Abscissa);
             }
         }
 
@@ -67,10 +64,7 @@
         {
             get
             {
-                return Columns.Where(column => column.SelectionType == SelectionType.Ordinate)
-                              .Select(column => column.Name)
-                              .DefaultIfEmpty("not selected")
-                              .First();
+                return GetColumnNameFor(SelectionType.Ordinate);
             }
         }
 
@@ -149,6 +143,14 @@
             return _availableSelectionTypes.Where(notSelectedYet)
                                            .DefaultIfEmpty(SelectionType.NotSelected)
                                            .First();
+        }
+
+        private string GetColumnNameFor(SelectionType type)
+        {
+            return Columns.Where(column => column.SelectionType == type)
+                              .Select(column => column.Name)
+                              .DefaultIfEmpty("not selected")
+                              .First();
         }
 
         private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
