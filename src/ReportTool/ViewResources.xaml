@@ -7,22 +7,49 @@
         <Setter Property="BorderBrush" Value="Gray"></Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderBrush" Value="Blue"></Setter>
                 <Setter Property="Cursor" Value="Hand"/>
             </Trigger>
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.NotSelected}">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="Gray" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Abscissa}">
+                <Setter Property="Background" Value="Blue" />
+                <Setter Property="BorderBrush" Value="DarkBlue" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Ordinate}">
+                <Setter Property="Background" Value="Orange" />
+                <Setter Property="BorderBrush" Value="DarkOrange" />
+            </DataTrigger>
         </Style.Triggers>
     </Style>
+    
+    <Style x:Key="DataColumnText" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="Black"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.NotSelected}">
+                <Setter Property="Foreground" Value="Black" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Abscissa}">
+                <Setter Property="Foreground" Value="White" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Ordinate}">
+                <Setter Property="Foreground" Value="Black" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
     <DataTemplate x:Key="DataColumnTemplate" DataType="{x:Type local:DataColumnViewModel}">
         <Border Margin="10 2" BorderThickness="2" CornerRadius="6" Style="{StaticResource DataColumnStyle}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.SelectColumnCommand }"
+                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.ToggleColumnSelectionCommand }"
                                            CommandParameter="{Binding}">                        
                     </i:InvokeCommandAction>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <StackPanel Orientation="Horizontal" Margin="10 6">
-                <TextBlock Text="{Binding Name}"></TextBlock>
+                <TextBlock Text="{Binding Name}" Style="{StaticResource DataColumnText}"></TextBlock>
             </StackPanel>
         </Border>
     </DataTemplate>

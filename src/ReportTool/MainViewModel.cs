@@ -139,6 +139,7 @@
         private void ToggleColumnSelection(DataColumnViewModel column)
         {
             column.SelectionType = GetAvailableSelectionTypeFor(column);
+            Console.WriteLine(string.Join(Environment.NewLine, Columns.Select(c => $"Name: {c.Name}, Type: {c.SelectionType}")));
         }
 
         private SelectionType GetAvailableSelectionTypeFor(DataColumnViewModel viewmodel)
