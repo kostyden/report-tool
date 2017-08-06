@@ -48,9 +48,9 @@
                 var actualColumns = listBox.Items.Select(item => item.Text);
                 var expectedColumns = new[]
                 {
-                    "id",
-                    "age",
-                    "weight"
+                    "Age",
+                    "Weight",
+                    "Height"
                 };
 
                 actualColumns.ShouldBeEquivalentTo(expectedColumns);
