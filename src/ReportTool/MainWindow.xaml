@@ -18,9 +18,8 @@
             <StackPanel DockPanel.Dock="Bottom" Height="32"></StackPanel>
             <StackPanel DockPanel.Dock="Left" MinWidth="200">
                 <TextBlock Text="Columns" Margin="10"/>
-                <ListBox AutomationProperties.AutomationId="columns" Margin="10" SelectionMode="Multiple"
-                         ItemsSource="{Binding Columns}">
-                </ListBox>
+                <ItemsControl ItemsSource="{Binding Columns}" ItemTemplate="{StaticResource DataColumnTemplate}">
+                </ItemsControl>
             </StackPanel>
             <DockPanel x:Name="chartArea">
 

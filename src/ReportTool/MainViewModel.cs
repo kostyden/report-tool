@@ -1,5 +1,6 @@
 ﻿namespace ReportTool
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
@@ -17,9 +18,9 @@
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ReadOnlyCollection<string> _columns;
+        private ReadOnlyCollection<DataColumnViewModel> _columns;
 
-        public ReadOnlyCollection<string> Columns
+        public ReadOnlyCollection<DataColumnViewModel> Columns
         {
             get
             {
@@ -98,22 +99,25 @@
 
         public ICommand CalculateScatterGraphDataCommand { get; }
 
+        public ICommand SelectColumnCommand { get; }
+
         public MainViewModel(IDataProvider provider, IScatterReportCalculator calculator)
         {
             _provider = provider;
             _calculator = calculator;
                 
-            Columns = new ReadOnlyCollection<string>(new List<string>());
+            Columns = new ReadOnlyCollection<DataColumnViewModel>(new List<DataColumnViewModel>());
             LoadDataCommand = new Command(param => LoadData((string)param));
             CalculateScatterGraphDataCommand = new Command(param => CalculateScatterReportData());
+            SelectColumnCommand = new Command(column => SelectColumn((DataColumnViewModel)column));
         }
 
         private void LoadData(string path)
         {
             var dataResult = _provider.GetFrom(path);
             _currentData = dataResult.Data;
-            var uniqueColumns = dataResult.Data.SelectMany(row => row.Keys).Distinct().ToList();
-            Columns = new ReadOnlyCollection<string>(uniqueColumns);
+            var uniqueColumns = dataResult.Data.SelectMany(row => row.Keys).Distinct().Select(columnName => new DataColumnViewModel(columnName)).ToList();
+            Columns = new ReadOnlyCollection<DataColumnViewModel>(uniqueColumns);
             ErrorMessage = dataResult.ErrorMessage;
         }
 
@@ -127,6 +131,11 @@
             };
 
             Report = _calculator.Calculate(inputData);
+        }
+
+        private void SelectColumn(DataColumnViewModel column)
+        {
+            column.SelectionType = SelectionType.Abscissa;
         }
 
         private void RaisePropertyChanged([CallerMemberName] string propertyName = null)

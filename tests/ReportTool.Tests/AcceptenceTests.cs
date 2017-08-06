@@ -3,15 +3,16 @@
     using FluentAssertions;
     using NUnit.Framework;
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Reflection;
     using TestStack.White;
+    using TestStack.White.Configuration;
     using TestStack.White.Factory;
     using TestStack.White.UIItems;
     using TestStack.White.UIItems.Finders;
     using TestStack.White.UIItems.ListBoxItems;
-    using TestStack.White.UIItems.WPFUIItems;
 
     [TestFixture]
     [Category("Acceptence tests")]
@@ -20,11 +21,9 @@
         [Test]
         public void OnStartupFilePathInputControlShouldBeEmpty()
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var exePath = Path.Combine(directoryName, @"ReportTool.exe");
-            using (var application = Application.Launch(exePath))
+            using (var application = LaunchApplication())
             {
-                var window = application.GetWindow("Report tool", InitializeOption.NoCache);
+                var window = application.GetWindows().First();
                 var textBox = window.Get<TextBox>(SearchCriteria.ByAutomationId("filePath"));
                 textBox.Text.Should().BeEmpty();
             }
@@ -33,11 +32,9 @@
         [Test]
         public void WithValidPathShouldLoadExpectedColumnsAfterClickingLoadButton()
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var exePath = Path.Combine(directoryName, @"ReportTool.exe");
-            using (var application = Application.Launch(exePath))
+            using (var application = LaunchApplication())
             {
-                var window = application.GetWindow("Report tool", InitializeOption.NoCache);
+                var window = application.GetWindows().First();
                 var textBox = window.Get<TextBox>(SearchCriteria.ByAutomationId("filePath"));
                 var button = window.Get<Button>(SearchCriteria.ByAutomationId("loadData"));
                 var listBox = window.Get<ListBox>(SearchCriteria.ByAutomationId("columns"));
@@ -55,6 +52,13 @@
 
                 actualColumns.ShouldBeEquivalentTo(expectedColumns);
             }
+        }
+
+        private Application LaunchApplication()
+        {
+            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
+            var exePath = Path.Combine(directoryName, @"ReportTool.exe");
+            return Application.Launch(exePath);
         }
     }
 }

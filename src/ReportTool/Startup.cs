@@ -12,9 +12,11 @@
             var dataProvider = new TestDataProvider();
             var calculator = new TestCalculator();
             var viewmodel = new MainViewModel(dataProvider, calculator);
-            var window = new MainWindow(viewmodel);
 
             var application = new App();
+            application.InitializeComponent();
+
+            var window = new MainWindow(viewmodel);
             application.Run(window);
         }
     }
@@ -33,7 +35,7 @@
     {
         public DataResult GetFrom(string filePath)
         {
-            if (filePath.Equals("ok"))
+            if (string.IsNullOrWhiteSpace(filePath))
             {
                 var data = new[]
                 {
