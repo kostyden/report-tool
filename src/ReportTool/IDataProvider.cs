@@ -4,6 +4,6 @@
 
     public interface IDataProvider
     {
-        IEnumerable<Dictionary<string, double>> GetFrom(string filePath);
+        DataResult GetFrom(string filePath);
     }
 }

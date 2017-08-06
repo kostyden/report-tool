@@ -58,8 +58,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command.cs" />
+    <Compile Include="DataResult.cs" />
     <Compile Include="IDataProvider.cs" />
+    <Compile Include="IScatterReportCalculator.cs" />
     <Compile Include="MainViewModel.cs" />
+    <Compile Include="ScatterInputData.cs" />
+    <Compile Include="ScatterPoint.cs" />
+    <Compile Include="ScatterReportData.cs" />
     <Compile Include="Startup.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
