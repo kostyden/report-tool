@@ -7,10 +7,10 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    class CalculateScatterGraphDataCommandTests : MainViewModelTestsBase
+    class GenerateReportDataCommandTests : MainViewModelTestsBase
     {
         [Test]
-        public void CalculateScatterGraphDataCommand_ShouldUpdateReportData()
+        public void ShouldUpdateReportData()
         {
             var plotPoints = new[]
             {
@@ -26,13 +26,13 @@
             var reportData = new ScatterReportData(plotPoints, trendLinePoints);
             FakeScatterReportCalculator.Calculate(Arg.Any<ScatterInputData>()).Returns(reportData);
 
-            ViewModel.CalculateScatterGraphDataCommand.Execute(null);
+            ViewModel.GenerateReportDataCommand.Execute(null);
 
             ViewModel.Report.ShouldBeEquivalentTo(reportData);
         }
 
         [Test]
-        public void CalculateScatterGraphDataCommand_ShouldRaisePropertyChangedForReportData()
+        public void ShouldRaisePropertyChangedForReportData()
         {
             var plotPoints = new[]
             {
@@ -49,13 +49,13 @@
             FakeScatterReportCalculator.Calculate(Arg.Any<ScatterInputData>()).Returns(reportData);
             ViewModel.MonitorEvents();
 
-            ViewModel.CalculateScatterGraphDataCommand.Execute(null);
+            ViewModel.GenerateReportDataCommand.Execute(null);
 
             ViewModel.ShouldRaisePropertyChangeFor(viewmodel => viewmodel.Report);
         }
 
         [Test]
-        public void CalculateScatterGraphDataCommand_ShouldPassCorrectInputValuesToTheCalculatorWhenSuccessfulyGetData()
+        public void ShouldPassCorrectInputValuesToTheCalculatorWhenSuccessfulyGetData()
         {
             ScatterInputData actualInputData = null;
             var expectedInputData = new ScatterInputData
@@ -80,7 +80,7 @@
             ViewModel.Columns.First(column => column.Name.Equals("seven")).SelectionType = SelectionType.Abscissa;
             ViewModel.Columns.First(column => column.Name.Equals("eight")).SelectionType = SelectionType.Ordinate;
 
-            ViewModel.CalculateScatterGraphDataCommand.Execute(null);
+            ViewModel.GenerateReportDataCommand.Execute(null);
 
             actualInputData.ShouldBeEquivalentTo(expectedInputData);
         }

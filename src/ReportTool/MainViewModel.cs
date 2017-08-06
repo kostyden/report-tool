@@ -86,7 +86,7 @@
 
         public ICommand LoadDataCommand { get; }
 
-        public ICommand CalculateScatterGraphDataCommand { get; }
+        public ICommand GenerateReportDataCommand { get; }
 
         public ICommand ToggleColumnSelectionCommand { get; }
 
@@ -97,7 +97,7 @@
 
             Columns = new ReadOnlyCollection<DataColumnViewModel>(new List<DataColumnViewModel>());
             LoadDataCommand = new Command(param => LoadData((string)param));
-            CalculateScatterGraphDataCommand = new Command(param => CalculateScatterReportData());
+            GenerateReportDataCommand = new Command(param => GenerateReportData());
             ToggleColumnSelectionCommand = new Command(column => ToggleColumnSelection((DataColumnViewModel)column));
         }
 
@@ -110,7 +110,7 @@
             ErrorMessage = dataResult.ErrorMessage;
         }
 
-        private void CalculateScatterReportData()
+        private void GenerateReportData()
         {
             var inputData = new ScatterInputData
             {

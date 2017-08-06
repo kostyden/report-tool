@@ -2,24 +2,43 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:local="clr-namespace:ReportTool">
+    <Color x:Key="AbscissaPrimaryColor">#0055B5</Color>
+    <Color x:Key="AbscissaSecondaryColor">#0012B5</Color>
+    <Color x:Key="OrdinatePrimaryColor">#FF6A00</Color>
+    <Color x:Key="OrdinateSecondaryColor">#FF3E00</Color>
+    <Color x:Key="NotSelectedColor">#808080</Color>
+    <Color x:Key="DefaultTextColor">#000000</Color>
+    <Color x:Key="SelectedTextColor">#FFFFFF</Color>
+
+    <SolidColorBrush x:Key="AbscissaPrimarySolidColorBrush" Color="{StaticResource AbscissaPrimaryColor}" />
+    <SolidColorBrush x:Key="AbscissaSecondarySolidColorBrush" Color="{StaticResource AbscissaPrimaryColor}" />
+    <SolidColorBrush x:Key="OrdinatePrimarySolidColorBrush" Color="{StaticResource OrdinatePrimaryColor}" />
+    <SolidColorBrush x:Key="OrdinateSecondarySolidColorBrush" Color="{StaticResource OrdinateSecondaryColor}" />
+    <SolidColorBrush x:Key="NotSelectedPrimarySolidColorBrush" Color="{StaticResource NotSelectedColor}" Opacity="0.0" />
+    <SolidColorBrush x:Key="NotSelectedSecondarySolidColorBrush" Color="{StaticResource NotSelectedColor}"/>
+    <SolidColorBrush x:Key="DefaultTextSolidColorBrush" Color="{StaticResource DefaultTextColor}"/>
+    <SolidColorBrush x:Key="SelectedTexSolidColorBrush" Color="{StaticResource SelectedTextColor}" />
+
+    <local:ScatterPointToWindowsPointConverter x:Key="ScatterPointToWindowsPoint"/>
+
     <Style x:Key="DataColumnStyle" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="BorderBrush" Value="Gray"></Setter>
+        <Setter Property="Background" Value="{StaticResource NotSelectedPrimarySolidColorBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource NotSelectedSecondarySolidColorBrush}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Cursor" Value="Hand"/>
             </Trigger>
             <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.NotSelected}">
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="BorderBrush" Value="Gray" />
+                <Setter Property="Background" Value="{StaticResource NotSelectedPrimarySolidColorBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource NotSelectedSecondarySolidColorBrush}" />
             </DataTrigger>
             <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Abscissa}">
-                <Setter Property="Background" Value="Blue" />
-                <Setter Property="BorderBrush" Value="DarkBlue" />
+                <Setter Property="Background" Value="{StaticResource AbscissaPrimarySolidColorBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource AbscissaSecondarySolidColorBrush}" />
             </DataTrigger>
             <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Ordinate}">
-                <Setter Property="Background" Value="Orange" />
-                <Setter Property="BorderBrush" Value="DarkOrange" />
+                <Setter Property="Background" Value="{StaticResource OrdinatePrimarySolidColorBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource OrdinateSecondarySolidColorBrush}" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -28,13 +47,13 @@
         <Setter Property="Foreground" Value="Black"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.NotSelected}">
-                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="Foreground" Value="{StaticResource DefaultTextSolidColorBrush}" />
             </DataTrigger>
             <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Abscissa}">
-                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Foreground" Value="{StaticResource SelectedTexSolidColorBrush}" />
             </DataTrigger>
             <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Ordinate}">
-                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="Foreground" Value="{StaticResource SelectedTexSolidColorBrush}" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
