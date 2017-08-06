@@ -16,7 +16,7 @@
 
         private IEnumerable<Dictionary<string, double>> _currentData;
 
-        private IEnumerable<SelectionType> _availableSelectionTypes = new[] { SelectionType.Abscissa, SelectionType.Ordinate };
+        private IEnumerable<SelectionType> _requiredSelectionTypes = new[] { SelectionType.Abscissa, SelectionType.Ordinate };
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -97,7 +97,11 @@
 
             Columns = new ReadOnlyCollection<DataColumnViewModel>(new List<DataColumnViewModel>());
             LoadDataCommand = new Command(param => LoadData((string)param));
-            GenerateReportDataCommand = new Command(param => GenerateReportData());
+            GenerateReportDataCommand = new Command(param => GenerateReportData(), param =>
+            {
+                var alreadySelectedTypes = Columns.Where(column => column.IsSelected).Select(column => column.SelectionType).ToSet();
+                return _requiredSelectionTypes.All(type => alreadySelectedTypes.Contains(type));
+            });
             ToggleColumnSelectionCommand = new Command(column => ToggleColumnSelection((DataColumnViewModel)column));
         }
 
@@ -128,6 +132,7 @@
 
             RaisePropertyChanged(nameof(AbscissaColumnName));
             RaisePropertyChanged(nameof(OrdinateColumnName));
+            ((Command)GenerateReportDataCommand).RaiseCanExecuteChanged();
         }
 
         private SelectionType GetAvailableSelectionTypeFor(DataColumnViewModel viewmodel)
@@ -140,7 +145,7 @@
             var alreadySelectedTypes = Columns.Where(column => column.IsSelected).Select(column => column.SelectionType).ToSet();
             Func<SelectionType, bool> notSelectedYet = type => alreadySelectedTypes.Contains(type) == false;
 
-            return _availableSelectionTypes.Where(notSelectedYet)
+            return _requiredSelectionTypes.Where(notSelectedYet)
                                            .DefaultIfEmpty(SelectionType.NotSelected)
                                            .First();
         }

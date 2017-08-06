@@ -102,6 +102,17 @@
             ViewModel.ShouldRaisePropertyChangeFor(viewmodel => viewmodel.OrdinateColumnName);
         }
 
+        [Test]
+        public void ShouldRaiseCanExecuteChangedEventForGenerateReportDataCommand()
+        {
+            var columnToSelect = ViewModel.Columns.First(column => column.Name.Equals("six"));
+            ViewModel.GenerateReportDataCommand.MonitorEvents();
+
+            ViewModel.ToggleColumnSelectionCommand.Execute(columnToSelect);
+
+            ViewModel.GenerateReportDataCommand.ShouldRaise(nameof(ViewModel.GenerateReportDataCommand.CanExecuteChanged));
+        }
+
         private void AssertThatSelectionTypeIsSetCorrectlyFor(DataColumnViewModel column, SelectionType expectedType)
         {
             ViewModel.ToggleColumnSelectionCommand.Execute(column);

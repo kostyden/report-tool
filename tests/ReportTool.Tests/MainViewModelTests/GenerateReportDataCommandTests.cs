@@ -3,7 +3,6 @@
     using FluentAssertions;
     using NSubstitute;
     using NUnit.Framework;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -72,7 +71,6 @@
             var dataResult = DataResult.CreateSuccessful(expectedInputData.Data);
             FakeProvider.GetFrom(null).ReturnsForAnyArgs(dataResult);
 
-
             var dummyReportData = new ScatterReportData(Enumerable.Empty<ScatterPoint>(), Enumerable.Empty<ScatterPoint>());
             FakeScatterReportCalculator.Calculate(Arg.Do<ScatterInputData>(input => actualInputData = input)).ReturnsForAnyArgs(dummyReportData);
 
@@ -83,6 +81,63 @@
             ViewModel.GenerateReportDataCommand.Execute(null);
 
             actualInputData.ShouldBeEquivalentTo(expectedInputData);
+        }
+
+        [Test]
+        public void CanExecute_ShouldReturnTrueWhenAbscissaAndOrdinateColumnsSelected()
+        {
+            ConfigureDataForCanExecuteTests();
+            ViewModel.Columns.First(column => column.Name.Equals("one")).SelectionType = SelectionType.Abscissa;
+            ViewModel.Columns.First(column => column.Name.Equals("three")).SelectionType = SelectionType.Ordinate;
+
+            var canExecute = ViewModel.GenerateReportDataCommand.CanExecute(null);
+
+            canExecute.Should().BeTrue();
+        }
+
+        [Test]
+        public void CanExecute_ShouldReturnFalseWhenNoColumnsSelected()
+        {
+            ConfigureDataForCanExecuteTests();
+
+            var canExecute = ViewModel.GenerateReportDataCommand.CanExecute(null);
+
+            canExecute.Should().BeFalse();
+        }
+
+        [Test]
+        public void CanExecute_ShouldReturnFalseWhenOnlyAbscissaColumnSelected()
+        {
+            ConfigureDataForCanExecuteTests();
+
+            var canExecute = ViewModel.GenerateReportDataCommand.CanExecute(null);
+            ViewModel.Columns.First(column => column.Name.Equals("two")).SelectionType = SelectionType.Abscissa;
+
+            canExecute.Should().BeFalse();
+        }
+
+        [Test]
+        public void CanExecute_ShouldReturnFalseWhenOnlyOrdinateColumnSelected()
+        {
+            ConfigureDataForCanExecuteTests();
+
+            var canExecute = ViewModel.GenerateReportDataCommand.CanExecute(null);
+            ViewModel.Columns.First(column => column.Name.Equals("three")).SelectionType = SelectionType.Ordinate;
+
+            canExecute.Should().BeFalse();
+        }
+
+        private void ConfigureDataForCanExecuteTests()
+        {
+            var data = new[]
+            {
+                new Dictionary<string, double> { { "one", 0.00052 }, { "two", 1.000012}, { "three", 1.1} }
+            };
+
+            var dataResult = DataResult.CreateSuccessful(data);
+            FakeProvider.GetFrom(null).ReturnsForAnyArgs(dataResult);
+
+            ViewModel.LoadDataCommand.Execute("dummy.path");
         }
     }
 }
