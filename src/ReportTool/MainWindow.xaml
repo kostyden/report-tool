@@ -21,8 +21,22 @@
                 <ItemsControl ItemsSource="{Binding Columns}" ItemTemplate="{StaticResource DataColumnTemplate}">
                 </ItemsControl>
             </StackPanel>
-            <DockPanel x:Name="chartArea">
-
+            <DockPanel x:Name="chartArea" LastChildFill="true">
+                <Border DockPanel.Dock="Bottom" Background="Transparent" BorderBrush="Blue" BorderThickness="0 2 0 0">
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding AbscissaColumnName}"/>
+                    </Grid>
+                </Border>
+                <Border DockPanel.Dock="Left" Background="Transparent" BorderBrush="Orange" BorderThickness="0 0 2 0">
+                    <Grid>
+                        <TextBlock VerticalAlignment="Center" Text="{Binding OrdinateColumnName}">
+                            <TextBlock.LayoutTransform>
+                                <RotateTransform Angle="270"/>
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                    </Grid>
+                </Border>
+                <Canvas></Canvas>
             </DockPanel>
         </DockPanel>
     </DockPanel>

@@ -68,6 +68,7 @@
 
             AssertThatSelectionTypeIsSetCorrectlyFor(columnToSelect, SelectionType.NotSelected);
         }
+
         [Test]
         [TestCase(SelectionType.Abscissa)]
         [TestCase(SelectionType.Ordinate)]
@@ -77,6 +78,28 @@
             columnToSelect.SelectionType = selectedType;
 
             AssertThatSelectionTypeIsSetCorrectlyFor(columnToSelect, SelectionType.NotSelected);
+        }
+
+        [Test]
+        public void ShouldRaisePropertyChangedForAbscissaColumnName()
+        {
+            var columnToSelect = ViewModel.Columns.First(column => column.Name.Equals("one"));
+            ViewModel.MonitorEvents();
+
+            ViewModel.ToggleColumnSelectionCommand.Execute(columnToSelect);
+
+            ViewModel.ShouldRaisePropertyChangeFor(viewmodel => viewmodel.AbscissaColumnName);
+        }
+
+        [Test]
+        public void ShouldRaisePropertyChangedForOrdinateColumnName()
+        {
+            var columnToSelect = ViewModel.Columns.First(column => column.Name.Equals("six"));
+            ViewModel.MonitorEvents();
+
+            ViewModel.ToggleColumnSelectionCommand.Execute(columnToSelect);
+
+            ViewModel.ShouldRaisePropertyChangeFor(viewmodel => viewmodel.OrdinateColumnName);
         }
 
         private void AssertThatSelectionTypeIsSetCorrectlyFor(DataColumnViewModel column, SelectionType expectedType)

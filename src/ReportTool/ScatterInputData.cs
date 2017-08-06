@@ -7,8 +7,8 @@
     {
         public IEnumerable<Dictionary<string, double>> Data { get; set; }
 
-        public string ColumnNameForX { get; set; }
+        public string AbscissaColumnName { get; set; }
 
-        public string ColumnNameForY { get; set; }
+        public string OrdinateColumnName { get; set; }
     }
 }

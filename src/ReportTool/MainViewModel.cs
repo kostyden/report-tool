@@ -52,33 +52,25 @@
             }
         }
 
-        private string _columnNameForX;
-
-        public string ColumnNameForX
+        public string AbscissaColumnName
         {
             get
             {
-                return _columnNameForX;
-            }
-
-            set
-            {
-                _columnNameForX = value;
+                return Columns.Where(column => column.SelectionType == SelectionType.Abscissa)
+                              .Select(column => column.Name)
+                              .DefaultIfEmpty("not selected")
+                              .First();
             }
         }
 
-        private string _columnNameForY;
-
-        public string ColumnNameForY
+        public string OrdinateColumnName
         {
             get
             {
-                return _columnNameForY;
-            }
-
-            set
-            {
-                _columnNameForY = value;
+                return Columns.Where(column => column.SelectionType == SelectionType.Ordinate)
+                              .Select(column => column.Name)
+                              .DefaultIfEmpty("not selected")
+                              .First();
             }
         }
 
@@ -129,8 +121,8 @@
             var inputData = new ScatterInputData
             {
                 Data = _currentData,
-                ColumnNameForX = ColumnNameForX,
-                ColumnNameForY = ColumnNameForY
+                AbscissaColumnName = AbscissaColumnName,
+                OrdinateColumnName = OrdinateColumnName
             };
 
             Report = _calculator.Calculate(inputData);
@@ -139,7 +131,9 @@
         private void ToggleColumnSelection(DataColumnViewModel column)
         {
             column.SelectionType = GetAvailableSelectionTypeFor(column);
-            Console.WriteLine(string.Join(Environment.NewLine, Columns.Select(c => $"Name: {c.Name}, Type: {c.SelectionType}")));
+
+            RaisePropertyChanged(nameof(AbscissaColumnName));
+            RaisePropertyChanged(nameof(OrdinateColumnName));
         }
 
         private SelectionType GetAvailableSelectionTypeFor(DataColumnViewModel viewmodel)

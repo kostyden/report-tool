@@ -25,7 +25,7 @@
     {
         public ScatterReportData Calculate(ScatterInputData data)
         {
-            var plotPoints = data.Data.Select(row => new ScatterPoint(row[data.ColumnNameForX], row[data.ColumnNameForY])).ToList();
+            var plotPoints = data.Data.Select(row => new ScatterPoint(row[data.AbscissaColumnName], row[data.OrdinateColumnName])).ToList();
             var trendLinePoints = Enumerable.Empty<ScatterPoint>();
             return new ScatterReportData(plotPoints, trendLinePoints);
         }
