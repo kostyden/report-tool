@@ -16,6 +16,8 @@
 
         private IEnumerable<Dictionary<string, double>> _currentData;
 
+        private IEnumerable<SelectionType> _availableSelectionTypes = new[] { SelectionType.Abscissa, SelectionType.Ordinate };
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private ReadOnlyCollection<DataColumnViewModel> _columns;
@@ -92,6 +94,7 @@
             private set
             {
                 _report = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -99,17 +102,17 @@
 
         public ICommand CalculateScatterGraphDataCommand { get; }
 
-        public ICommand SelectColumnCommand { get; }
+        public ICommand ToggleColumnSelectionCommand { get; }
 
         public MainViewModel(IDataProvider provider, IScatterReportCalculator calculator)
         {
             _provider = provider;
             _calculator = calculator;
-                
+
             Columns = new ReadOnlyCollection<DataColumnViewModel>(new List<DataColumnViewModel>());
             LoadDataCommand = new Command(param => LoadData((string)param));
             CalculateScatterGraphDataCommand = new Command(param => CalculateScatterReportData());
-            SelectColumnCommand = new Command(column => SelectColumn((DataColumnViewModel)column));
+            ToggleColumnSelectionCommand = new Command(column => ToggleColumnSelection((DataColumnViewModel)column));
         }
 
         private void LoadData(string path)
@@ -133,9 +136,24 @@
             Report = _calculator.Calculate(inputData);
         }
 
-        private void SelectColumn(DataColumnViewModel column)
+        private void ToggleColumnSelection(DataColumnViewModel column)
         {
-            column.SelectionType = SelectionType.Abscissa;
+            column.SelectionType = GetAvailableSelectionTypeFor(column);
+        }
+
+        private SelectionType GetAvailableSelectionTypeFor(DataColumnViewModel viewmodel)
+        {
+            if (viewmodel.IsSelected)
+            {
+                return SelectionType.NotSelected;
+            }
+
+            var alreadySelectedTypes = Columns.Where(column => column.IsSelected).Select(column => column.SelectionType).ToSet();
+            Func<SelectionType, bool> notSelectedYet = type => alreadySelectedTypes.Contains(type) == false;
+
+            return _availableSelectionTypes.Where(notSelectedYet)
+                                           .DefaultIfEmpty(SelectionType.NotSelected)
+                                           .First();
         }
 
         private void RaisePropertyChanged([CallerMemberName] string propertyName = null)

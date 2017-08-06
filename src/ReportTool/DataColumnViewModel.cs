@@ -8,6 +8,14 @@
 
         public SelectionType SelectionType { get; set; }
 
+        public bool IsSelected
+        {
+            get
+            {
+                return SelectionType != SelectionType.NotSelected;
+            }
+        }
+
         public DataColumnViewModel(string columnName)
         {
             Name = columnName;

@@ -69,9 +69,10 @@
     <Compile Include="CommandTests.cs" />
     <Compile Include="DataResultTests.cs" />
     <Compile Include="MainViewModelTests\CalculateScatterGraphDataCommandTests.cs" />
+    <Compile Include="MainViewModelTests\GeneralTests.cs" />
     <Compile Include="MainViewModelTests\LoadDataCommandTests.cs" />
     <Compile Include="MainViewModelTests\MainViewModelTestsBase.cs" />
-    <Compile Include="MainViewModelTests\SelectColumnCommandTests.cs" />
+    <Compile Include="MainViewModelTests\ToggleColumnSelectionCommandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

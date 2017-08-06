@@ -15,18 +15,12 @@
         protected MainViewModel ViewModel { get; private set; }
 
         [SetUp]
-        public void SetUp()
+        public void SetUpBase()
         {
             FakeProvider = Substitute.For<IDataProvider>();
             FakeScatterReportCalculator = Substitute.For<IScatterReportCalculator>();
 
             ViewModel = new MainViewModel(FakeProvider, FakeScatterReportCalculator);
-        }
-
-        [Test]
-        public void Columns_ShouldBeEmptyAfterInitialization()
-        {
-            ViewModel.Columns.Should().BeEmpty();
         }
     }
 }

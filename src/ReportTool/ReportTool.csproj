@@ -66,6 +66,7 @@
     <Compile Include="Command.cs" />
     <Compile Include="DataColumnViewModel.cs" />
     <Compile Include="DataResult.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="IDataProvider.cs" />
     <Compile Include="IScatterReportCalculator.cs" />
     <Compile Include="MainViewModel.cs" />

@@ -10,7 +10,7 @@
     class CalculateScatterGraphDataCommandTests : MainViewModelTestsBase
     {
         [Test]
-        public void CalculateScatterGraphDataCommand_ShouldUpdateGraphData()
+        public void CalculateScatterGraphDataCommand_ShouldUpdateReportData()
         {
             var plotPoints = new[]
             {
@@ -29,6 +29,29 @@
             ViewModel.CalculateScatterGraphDataCommand.Execute(null);
 
             ViewModel.Report.ShouldBeEquivalentTo(reportData);
+        }
+
+        [Test]
+        public void CalculateScatterGraphDataCommand_ShouldRaisePropertyChangedForReportData()
+        {
+            var plotPoints = new[]
+            {
+                new ScatterPoint(1.23, 1.9),
+                new ScatterPoint(1.59, 24.5),
+                new ScatterPoint(0.5, 15),
+            };
+            var trendLinePoints = new[]
+            {
+                new ScatterPoint(1, 12.12),
+                new ScatterPoint(2, 16.34)
+            };
+            var reportData = new ScatterReportData(plotPoints, trendLinePoints);
+            FakeScatterReportCalculator.Calculate(Arg.Any<ScatterInputData>()).Returns(reportData);
+            ViewModel.MonitorEvents();
+
+            ViewModel.CalculateScatterGraphDataCommand.Execute(null);
+
+            ViewModel.ShouldRaisePropertyChangeFor(viewmodel => viewmodel.Report);
         }
 
         [Test]

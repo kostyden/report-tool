@@ -22,8 +22,8 @@
             FakeProvider.GetFrom(validPath).Returns(result);
             var expectedColumns = new[]
             {
-                new DataColumnViewModel("one"),
-                new DataColumnViewModel("two")
+                new DataColumnViewModel("one") { SelectionType = SelectionType.NotSelected },
+                new DataColumnViewModel("two") { SelectionType = SelectionType.NotSelected }
             };
 
             ViewModel.LoadDataCommand.Execute(validPath);
