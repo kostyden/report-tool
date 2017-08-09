@@ -16,6 +16,11 @@
 
         private IEnumerable<ScatterPoint> CalculateTrendLine(List<ScatterPoint> points)
         {
+            if (points.Any() == false)
+            {
+                return Enumerable.Empty<ScatterPoint>();
+            }
+
             var pointsAmount = points.Count();
             var sumOfXYProduct = points.Sum(point => point.X * point.Y);
             var sumOfX = points.Sum(point => point.X);

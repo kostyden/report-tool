@@ -40,20 +40,30 @@
                         </TextBlock>
                     </Grid>
                 </Border>
-                <ItemsControl x:Name="chartData" ItemsSource="{Binding Report.PlotPoints}">
+                <ItemsControl x:Name="chartData" ItemsSource="{Binding Path=Report.PlotPoints}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas x:Name="chartArea"/>
+                            <Canvas x:Name="chartArea" Margin="12">
+                                <Canvas.LayoutTransform>
+                                    <ScaleTransform ScaleY="-1" />
+                                </Canvas.LayoutTransform>
+                            </Canvas>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Path Fill="Blue">
+                            <Path Fill="Blue" ToolTip="{Binding Converter={StaticResource ScatterPointToText}}">
                                 <Path.Data>
-                                    <EllipseGeometry Center="{Binding Converter={StaticResource ScatterPointToWindowsPoint}}" RadiusX="4" RadiusY="4">
-                                        <EllipseGeometry.Transform>
-                                            <TranslateTransform X="100" Y="50"/>
-                                        </EllipseGeometry.Transform>
+                                    <EllipseGeometry RadiusX="4" RadiusY="4">
+                                        <EllipseGeometry.Center>
+                                            <MultiBinding Converter="{StaticResource ScatterPointToWindowsPoint}">
+                                                <Binding />
+                                                <Binding RelativeSource="{RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}" Path="DataContext.Report.MinPoint" />
+                                                <Binding RelativeSource="{RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}" Path="DataContext.Report.MaxPoint" />
+                                                <Binding RelativeSource="{RelativeSource AncestorType={x:Type Canvas}, Mode=FindAncestor}" Path="ActualWidth" />
+                                                <Binding RelativeSource="{RelativeSource AncestorType={x:Type Canvas}, Mode=FindAncestor}" Path="ActualHeight" />
+                                            </MultiBinding>
+                                        </EllipseGeometry.Center>
                                     </EllipseGeometry>
                                 </Path.Data>
                             </Path>

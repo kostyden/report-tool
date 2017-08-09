@@ -20,6 +20,7 @@
     <SolidColorBrush x:Key="SelectedTexSolidColorBrush" Color="{StaticResource SelectedTextColor}" />
 
     <local:ScatterPointToWindowsPointConverter x:Key="ScatterPointToWindowsPoint"/>
+    <local:ScatterPointToTextConverter x:Key="ScatterPointToText" />
 
     <Style x:Key="DataColumnStyle" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{StaticResource NotSelectedPrimarySolidColorBrush}" />

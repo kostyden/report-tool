@@ -72,7 +72,8 @@
     <Compile Include="MainViewModel.cs" />
     <Compile Include="ScatterInputData.cs" />
     <Compile Include="ScatterPoint.cs" />
-    <Compile Include="ScatterPointToWindowsPointConverter.cs" />
+    <Compile Include="ScatterPointToTextConverter.cs" />
+    <Compile Include="ScatterPointToWindowsPointMultiConverter.cs" />
     <Compile Include="ScatterReportCalculator.cs" />
     <Compile Include="ScatterReportData.cs" />
     <Compile Include="SelectionType.cs" />
