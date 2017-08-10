@@ -16,6 +16,12 @@
         }
 
         [Test]
+        public void Report_ShouldBeEmptyAfterInitialization()
+        {
+            ViewModel.Report.ShouldBeEquivalentTo(ScatterReportData.Empty);
+        }
+
+        [Test]
         public void AbscissaColumnName_ShouldReturnNameOfColumnSelectedForAbscissaWhenSelected()
         {
             ConfigureColumns();

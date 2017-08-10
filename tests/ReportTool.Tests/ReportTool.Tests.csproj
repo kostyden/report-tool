@@ -71,6 +71,7 @@
     <Compile Include="CommandTests.cs" />
     <Compile Include="DataColumnViewModelTests.cs" />
     <Compile Include="DataResultTests.cs" />
+    <Compile Include="FileDataProviderTests.cs" />
     <Compile Include="MainViewModelTests\GenerateReportDataCommandTests.cs" />
     <Compile Include="MainViewModelTests\GeneralTests.cs" />
     <Compile Include="MainViewModelTests\LoadDataCommandTests.cs" />

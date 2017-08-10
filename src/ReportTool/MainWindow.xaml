@@ -14,6 +14,9 @@
                     Command="{Binding LoadDataCommand}"
                     CommandParameter="{Binding Text, ElementName=filePath}"/>
         </StackPanel>
+        <Grid DockPanel.Dock="Top">
+            <TextBlock HorizontalAlignment="Center" Foreground="DarkRed" FontWeight="Bold" Text="{Binding ErrorMessage}" />
+        </Grid>
         <DockPanel LastChildFill="True">
             <StackPanel DockPanel.Dock="Bottom" Height="32"></StackPanel>
             <StackPanel DockPanel.Dock="Left" MinWidth="200">

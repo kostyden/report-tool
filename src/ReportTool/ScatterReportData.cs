@@ -6,6 +6,8 @@
 
     public class ScatterReportData
     {
+        public readonly static ScatterReportData Empty = new ScatterReportData(Enumerable.Empty<ScatterPoint>(), ScatterLine.Zero);
+
         public IEnumerable<ScatterPoint> PlotPoints { get; }
 
         public ScatterLine TrendLine { get; }

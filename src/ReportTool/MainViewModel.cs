@@ -89,11 +89,6 @@
         {
             get
             {
-                if (_report == null)
-                {
-                    return Enumerable.Empty<object>();
-                }
-
                 var collection = new List<object>();
                 collection.AddRange(_report.PlotPoints.Cast<object>());
                 collection.Add(_report.TrendLine);
@@ -114,12 +109,9 @@
             _calculator = calculator;
 
             Columns = new ReadOnlyCollection<DataColumnViewModel>(new List<DataColumnViewModel>());
+            Report = new ScatterReportData(Enumerable.Empty<ScatterPoint>(), ScatterLine.Zero);
             LoadDataCommand = new Command(param => LoadData((string)param));
-            GenerateReportDataCommand = new Command(param => GenerateReportData(), param =>
-            {
-                var alreadySelectedTypes = Columns.Where(column => column.IsSelected).Select(column => column.SelectionType).ToSet();
-                return _requiredSelectionTypes.All(type => alreadySelectedTypes.Contains(type));
-            });
+            GenerateReportDataCommand = new Command(param => GenerateReportData(), param => IsAllRequiredColumnsSelected());
             ToggleColumnSelectionCommand = new Command(column => ToggleColumnSelection((DataColumnViewModel)column));
         }
 
@@ -144,9 +136,20 @@
             Report = _calculator.Calculate(inputData);
         }
 
+        private bool IsAllRequiredColumnsSelected()
+        {
+            var alreadySelectedTypes = Columns.Where(column => column.IsSelected).Select(column => column.SelectionType).ToSet();
+            return _requiredSelectionTypes.All(type => alreadySelectedTypes.Contains(type));
+        }
+
         private void ToggleColumnSelection(DataColumnViewModel column)
         {
             column.SelectionType = GetAvailableSelectionTypeFor(column);
+
+            if (IsAllRequiredColumnsSelected() == false)
+            {
+                Report = ScatterReportData.Empty;
+            }
 
             RaisePropertyChanged(nameof(AbscissaColumnName));
             RaisePropertyChanged(nameof(OrdinateColumnName));

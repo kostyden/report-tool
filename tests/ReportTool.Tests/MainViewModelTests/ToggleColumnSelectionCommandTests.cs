@@ -113,10 +113,56 @@
             ViewModel.GenerateReportDataCommand.ShouldRaise(nameof(ViewModel.GenerateReportDataCommand.CanExecuteChanged));
         }
 
+        [Test]
+        public void ShouldResetReportDataAfterRequiredColumnWasUnselected()
+        {
+            var inputData = new ScatterInputData
+            {
+                Data = new[]
+                {
+                    new Dictionary<string, double> { { "seven", 0.00052 }, { "eight", 1.000012}, { "nine", 1.1} },
+                    new Dictionary<string, double> { { "seven", 0.0000010101 }, { "eight", 0.12456 }, { "nine", 1.2 } }
+                },
+                AbscissaColumnName = "seven",
+                OrdinateColumnName = "eight"
+            };
+
+            var dataResult = DataResult.CreateSuccessful(inputData.Data);
+            FakeProvider.GetFrom(null).ReturnsForAnyArgs(dataResult);
+
+            var dummyReportData = GenerateDummyReportData();
+            FakeScatterReportCalculator.Calculate(null).ReturnsForAnyArgs(dummyReportData);
+
+            ViewModel.LoadDataCommand.Execute("dummy.path");
+            var abscissaColumn = ViewModel.Columns.First(column => column.Name.Equals("seven"));
+            var ordinateColumn = ViewModel.Columns.First(column => column.Name.Equals("nine"));
+            abscissaColumn.SelectionType = SelectionType.Abscissa;
+            ordinateColumn.SelectionType = SelectionType.Ordinate;
+
+            ViewModel.GenerateReportDataCommand.Execute(null);
+            ViewModel.ToggleColumnSelectionCommand.Execute(abscissaColumn);
+
+            ViewModel.Report.ShouldBeEquivalentTo(ScatterReportData.Empty);
+        }
+
         private void AssertThatSelectionTypeIsSetCorrectlyFor(DataColumnViewModel column, SelectionType expectedType)
         {
             ViewModel.ToggleColumnSelectionCommand.Execute(column);
             column.SelectionType.Should().Be(expectedType);
+        }
+
+        private ScatterReportData GenerateDummyReportData()
+        {
+            var points = new[]
+            {
+                new ScatterPoint(1.2, 4.3),
+                new ScatterPoint(1.3, 4.2),
+                new ScatterPoint(1.4, 4.1),
+                new ScatterPoint(1.5, 4.0)
+            };
+            var trendLine = new ScatterLine(new ScatterPoint(1.0, 4.15), new ScatterPoint(1.5, 4.15));
+
+            return new ScatterReportData(points, trendLine);
         }
     }
 }

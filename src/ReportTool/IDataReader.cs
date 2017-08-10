@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
 
-    public interface IDataProvider
+    public interface IDataReader
     {
-        DataResult GetFrom(string path);
+        DataResult Read(string path);
     }
 }

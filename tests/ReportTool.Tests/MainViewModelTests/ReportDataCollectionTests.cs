@@ -10,12 +10,6 @@
     class ReportDataCollectionTests : MainViewModelTestsBase
     {
         [Test]
-        public void ShouldReturnEmptyCollectionWhenReportIsNull()
-        {
-            ViewModel.ReportDataCollection.Should().BeEmpty();
-        }
-
-        [Test]
         public void ShouldContainAllCalculatedPlotPoints()
         {
             var plotPoints = new[]
