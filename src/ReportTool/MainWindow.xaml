@@ -40,7 +40,7 @@
                         </TextBlock>
                     </Grid>
                 </Border>
-                <ItemsControl x:Name="chartData" ItemsSource="{Binding Path=Report.PlotPoints}">
+                <ItemsControl x:Name="chartData" ItemsSource="{Binding ReportDataCollection}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas x:Name="chartArea" Margin="12">
@@ -50,25 +50,6 @@
                             </Canvas>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Path Fill="Blue" ToolTip="{Binding Converter={StaticResource ScatterPointToText}}">
-                                <Path.Data>
-                                    <EllipseGeometry RadiusX="4" RadiusY="4">
-                                        <EllipseGeometry.Center>
-                                            <MultiBinding Converter="{StaticResource ScatterPointToWindowsPoint}">
-                                                <Binding />
-                                                <Binding RelativeSource="{RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}" Path="DataContext.Report.MinPoint" />
-                                                <Binding RelativeSource="{RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}" Path="DataContext.Report.MaxPoint" />
-                                                <Binding RelativeSource="{RelativeSource AncestorType={x:Type Canvas}, Mode=FindAncestor}" Path="ActualWidth" />
-                                                <Binding RelativeSource="{RelativeSource AncestorType={x:Type Canvas}, Mode=FindAncestor}" Path="ActualHeight" />
-                                            </MultiBinding>
-                                        </EllipseGeometry.Center>
-                                    </EllipseGeometry>
-                                </Path.Data>
-                            </Path>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </DockPanel>
         </DockPanel>

@@ -1,6 +1,5 @@
 ﻿namespace ReportTool
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -9,16 +8,16 @@
         public ScatterReportData Calculate(ScatterInputData input)
         {
             var plotPoints = input.Data.Select(row => new ScatterPoint(row[input.AbscissaColumnName], row[input.OrdinateColumnName])).ToList();
-            var trendLinePoints = CalculateTrendLine(plotPoints).ToList();
+            var trendLine = CalculateTrendLine(plotPoints);
 
-            return new ScatterReportData(plotPoints, trendLinePoints);
+            return new ScatterReportData(plotPoints, trendLine);
         }
 
-        private IEnumerable<ScatterPoint> CalculateTrendLine(List<ScatterPoint> points)
+        private ScatterLine CalculateTrendLine(List<ScatterPoint> points)
         {
             if (points.Any() == false)
             {
-                return Enumerable.Empty<ScatterPoint>();
+                return ScatterLine.Zero;
             }
 
             var pointsAmount = points.Count();
@@ -36,7 +35,12 @@
             var offsetDividend = sumOfY - slope * sumOfX;
             var offset = offsetDividend / pointsAmount;
 
-            return points.Select(point => new ScatterPoint(point.X, slope * point.X + offset));
+            var minXValue = points.Min(point => point.X);
+            var maxXValue = points.Max(point => point.X);
+
+            var start = new ScatterPoint(minXValue, slope * minXValue + offset);
+            var end = new ScatterPoint(maxXValue, slope * maxXValue + offset);
+            return new ScatterLine(start, end);
         }
     }
 }

@@ -81,6 +81,24 @@
             {
                 _report = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(nameof(ReportDataCollection));
+            }
+        }
+
+        public IEnumerable<object> ReportDataCollection
+        {
+            get
+            {
+                if (_report == null)
+                {
+                    return Enumerable.Empty<object>();
+                }
+
+                var collection = new List<object>();
+                collection.AddRange(_report.PlotPoints.Cast<object>());
+                collection.Add(_report.TrendLine);
+
+                return collection;
             }
         }
 

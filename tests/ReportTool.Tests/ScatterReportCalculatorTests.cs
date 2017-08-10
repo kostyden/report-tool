@@ -28,7 +28,7 @@
                 AbscissaColumnName = "first",
                 OrdinateColumnName = "second"
             };
-            var expectedReport = new ScatterReportData(Enumerable.Empty<ScatterPoint>(), Enumerable.Empty<ScatterPoint>());
+            var expectedReport = new ScatterReportData(Enumerable.Empty<ScatterPoint>(), new ScatterLine(new ScatterPoint(), new ScatterPoint()));
 
             var actualReport = _calculator.Calculate(inputData);
 
@@ -87,17 +87,10 @@
                 new Dictionary<string, double> {{ "first", 35 }, { "second", 1.4 }, { "third", 29.2 }, { "fourth", 40 } },
                 new Dictionary<string, double> {{ "first", 40 }, { "second", 1.221 }, { "third", 28 }, { "fourth", 50 } }
             };
-            var expectedTrendLinePoints = new[]
-            {
-                new ScatterPoint(10, 13.2833),
-                new ScatterPoint(15, 19.2533),
-                new ScatterPoint(20, 25.2233),
-                new ScatterPoint(35, 43.1343),
-                new ScatterPoint(40, 49.1033)
-            };
+            var expectedTrendLine = new ScatterLine(new ScatterPoint(10, 13.2833), new ScatterPoint(40, 49.1033));
             var inputData = new ScatterInputData { Data = data, AbscissaColumnName = "first", OrdinateColumnName = "fourth" };
 
-            AssertThatTrendLineCalculatedCorrectly(inputData, expectedTrendLinePoints);
+            AssertThatTrendLineCalculatedCorrectly(inputData, expectedTrendLine);
         }
 
         [Test]
@@ -111,17 +104,10 @@
                 new Dictionary<string, double> {{ "first", 40 }, { "second", 20 }},
                 new Dictionary<string, double> {{ "first", 50 }, { "second", 10 }}
             };
-            var expectedTrendLinePoints = new[]
-            {
-                new ScatterPoint(10, 50),
-                new ScatterPoint(20, 40),
-                new ScatterPoint(30, 30),
-                new ScatterPoint(40, 20),
-                new ScatterPoint(50, 10)
-            };
+            var expectedTrendLine = new ScatterLine(new ScatterPoint(10, 50), new ScatterPoint(50, 10));
             var inputData = new ScatterInputData { Data = data, AbscissaColumnName = "first", OrdinateColumnName = "second" };
 
-            AssertThatTrendLineCalculatedCorrectly(inputData, expectedTrendLinePoints);
+            AssertThatTrendLineCalculatedCorrectly(inputData, expectedTrendLine);
         }
 
         [Test]
@@ -135,29 +121,22 @@
                 new Dictionary<string, double> {{ "first", 65 }, { "second", 1.96665785281196 } },
                 new Dictionary<string, double> {{ "first", 28 }, { "second", 1.48216295762807 } }
             };
-            var expectedTrendLinePoints = new[]
-            {
-                new ScatterPoint(61, 1.6870),
-                new ScatterPoint(75, 1.6954),
-                new ScatterPoint(26, 1.6660),
-                new ScatterPoint(65, 1.6894),
-                new ScatterPoint(28, 1.6672)
-            };
+            var expectedTrendLine = new ScatterLine(new ScatterPoint(26, 1.6660), new ScatterPoint(75, 1.6954));
             var inputData = new ScatterInputData { Data = data, AbscissaColumnName = "first", OrdinateColumnName = "second" };
 
-            AssertThatTrendLineCalculatedCorrectly(inputData, expectedTrendLinePoints);
+            AssertThatTrendLineCalculatedCorrectly(inputData, expectedTrendLine);
         }
 
-        private void AssertThatTrendLineCalculatedCorrectly(ScatterInputData inputData, IEnumerable<ScatterPoint> expectedPoints)
+        private void AssertThatTrendLineCalculatedCorrectly(ScatterInputData inputData, ScatterLine expectedLine)
         {
             var actualReport = _calculator.Calculate(inputData);
 
-            actualReport.TrendLinePoints.ShouldBeEquivalentTo(
-                expectedPoints, 
-                config => PointShouldBeEqualApproximately(config).WithStrictOrdering());
+            actualReport.TrendLine.ShouldBeEquivalentTo(
+                expectedLine, 
+                config => PointShouldBeEqualApproximately(config));
         }
 
-        private EquivalencyAssertionOptions<IEnumerable<ScatterPoint>> PointShouldBeEqualApproximately(EquivalencyAssertionOptions<IEnumerable<ScatterPoint>> config)
+        private EquivalencyAssertionOptions<ScatterLine> PointShouldBeEqualApproximately(EquivalencyAssertionOptions<ScatterLine> config)
         {
             return config.Using<double>(context => context.Subject.Should().BeApproximately(context.Expectation, APPROXIMATION_PRECISION))
                          .WhenTypeIs<double>();

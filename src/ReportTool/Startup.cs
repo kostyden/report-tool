@@ -10,7 +10,7 @@
         static void Main()
         {
             var dataProvider = new TestDataProvider();
-            var calculator = new TestCalculator();
+            var calculator = new ScatterReportCalculator();
             var viewmodel = new MainViewModel(dataProvider, calculator);
 
             var application = new App();
@@ -18,16 +18,6 @@
 
             var window = new MainWindow(viewmodel);
             application.Run(window);
-        }
-    }
-
-    class TestCalculator : IScatterReportCalculator
-    {
-        public ScatterReportData Calculate(ScatterInputData data)
-        {
-            var plotPoints = data.Data.Select(row => new ScatterPoint(row[data.AbscissaColumnName], row[data.OrdinateColumnName])).ToList();
-            var trendLinePoints = Enumerable.Empty<ScatterPoint>();
-            return new ScatterReportData(plotPoints, trendLinePoints);
         }
     }
 

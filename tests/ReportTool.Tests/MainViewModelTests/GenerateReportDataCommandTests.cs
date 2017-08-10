@@ -17,12 +17,8 @@
                 new ScatterPoint(1.59, 24.5),
                 new ScatterPoint(0.5, 15),
             };
-            var trendLinePoints = new[]
-            {
-                new ScatterPoint(1, 12.12),
-                new ScatterPoint(2, 16.34)
-            };
-            var reportData = new ScatterReportData(plotPoints, trendLinePoints);
+            var trendLine = new ScatterLine(new ScatterPoint(1, 12.12), new ScatterPoint(2, 16.34));
+            var reportData = new ScatterReportData(plotPoints, trendLine);
             FakeScatterReportCalculator.Calculate(Arg.Any<ScatterInputData>()).Returns(reportData);
 
             ViewModel.GenerateReportDataCommand.Execute(null);
@@ -39,18 +35,35 @@
                 new ScatterPoint(1.59, 24.5),
                 new ScatterPoint(0.5, 15),
             };
-            var trendLinePoints = new[]
-            {
-                new ScatterPoint(1, 12.12),
-                new ScatterPoint(2, 16.34)
-            };
-            var reportData = new ScatterReportData(plotPoints, trendLinePoints);
+            var trendLine = new ScatterLine(new ScatterPoint(1, 12.12), new ScatterPoint(2, 16.34));
+
+            var reportData = new ScatterReportData(plotPoints, trendLine);
             FakeScatterReportCalculator.Calculate(Arg.Any<ScatterInputData>()).Returns(reportData);
             ViewModel.MonitorEvents();
 
             ViewModel.GenerateReportDataCommand.Execute(null);
 
             ViewModel.ShouldRaisePropertyChangeFor(viewmodel => viewmodel.Report);
+        }
+
+        [Test]
+        public void ShouldRaisePropertyChangedForReportDataCollection()
+        {
+            var plotPoints = new[]
+            {
+                new ScatterPoint(1, 2),
+                new ScatterPoint(42, 22),
+                new ScatterPoint(2, 3),
+            };
+            var trendLine = new ScatterLine(new ScatterPoint(1, 4), new ScatterPoint(32, 22));
+
+            var reportData = new ScatterReportData(plotPoints, trendLine);
+            FakeScatterReportCalculator.Calculate(Arg.Any<ScatterInputData>()).Returns(reportData);
+            ViewModel.MonitorEvents();
+
+            ViewModel.GenerateReportDataCommand.Execute(null);
+
+            ViewModel.ShouldRaisePropertyChangeFor(viewmodel => viewmodel.ReportDataCollection);
         }
 
         [Test]
@@ -71,7 +84,7 @@
             var dataResult = DataResult.CreateSuccessful(expectedInputData.Data);
             FakeProvider.GetFrom(null).ReturnsForAnyArgs(dataResult);
 
-            var dummyReportData = new ScatterReportData(Enumerable.Empty<ScatterPoint>(), Enumerable.Empty<ScatterPoint>());
+            var dummyReportData = new ScatterReportData(Enumerable.Empty<ScatterPoint>(), new ScatterLine(new ScatterPoint(), new ScatterPoint()));
             FakeScatterReportCalculator.Calculate(Arg.Do<ScatterInputData>(input => actualInputData = input)).ReturnsForAnyArgs(dummyReportData);
 
             ViewModel.LoadDataCommand.Execute("dummy.path");

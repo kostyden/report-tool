@@ -5,18 +5,25 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using System.Windows;
 
     [TestFixture]
     class ScatterPointToWindowsPointConverterTests
     {
+        private ScatterPointToWindowsPointConverter _converter;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _converter = new ScatterPointToWindowsPointConverter();
+        }
+
         [Test]
         [TestCaseSource(nameof(GetTestCasesForConvertion))]
         public void ConvertShouldReturnExpectedPoint(object[] inputValues, Point expectedPoint)
         {
-            var converter = new ScatterPointToWindowsPointConverter();
-
-            var actualPoint = converter.Convert(inputValues, typeof(Point), null, CultureInfo.CurrentCulture);
+            var actualPoint = _converter.Convert(inputValues, typeof(Point), null, CultureInfo.CurrentCulture);
 
             actualPoint.ShouldBeEquivalentTo(
                 expectedPoint, 
@@ -49,6 +56,15 @@
             elementActualHeight = 200;
             expectedPoint = new Point(33.33, 33.33);
             yield return new TestCaseData(new object[] { originalPoint, minDataPoint, maxDataPoint, elementActualWdth, elementActualHeight }, expectedPoint);
+        }
+
+
+        [Test]
+        public void ConvertBack_ShouldThrowNotImplementedException()
+        {
+            Action convertBack = () => _converter.ConvertBack(null, Enumerable.Empty<Type>().ToArray(), null, CultureInfo.CurrentCulture);
+
+            convertBack.ShouldThrow<NotImplementedException>();
         }
     }
 }

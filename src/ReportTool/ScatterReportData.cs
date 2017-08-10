@@ -8,28 +8,18 @@
     {
         public IEnumerable<ScatterPoint> PlotPoints { get; }
 
-        public IEnumerable<ScatterPoint> TrendLinePoints { get; }
+        public ScatterLine TrendLine { get; }
 
-        public ScatterPoint MinPoint
-        {
-            get
-            {
-                return new ScatterPoint(PlotPoints.Select(point => point.X).DefaultIfEmpty(0).Min(), PlotPoints.Select(plot => plot.Y).DefaultIfEmpty(0).Min());
-            }
-        }
+        public ScatterPoint MinPoint { get; }
 
-        public ScatterPoint MaxPoint
-        {
-            get
-            {
-                return new ScatterPoint(PlotPoints.Select(plot => plot.X).DefaultIfEmpty(0).Max(), PlotPoints.Select(plot => plot.Y).DefaultIfEmpty(0).Max());
-            }
-        }
+        public ScatterPoint MaxPoint { get; }
 
-        public ScatterReportData(IEnumerable<ScatterPoint> plotPoints, IEnumerable<ScatterPoint> trendLinePoints)
+        public ScatterReportData(IEnumerable<ScatterPoint> plotPoints, ScatterLine trendLine)
         {
             PlotPoints = plotPoints;
-            TrendLinePoints = trendLinePoints;
+            TrendLine = trendLine;
+            MinPoint = new ScatterPoint(PlotPoints.Select(point => point.X).DefaultIfEmpty(0).Min(), PlotPoints.Select(plot => plot.Y).DefaultIfEmpty(0).Min());
+            MaxPoint = new ScatterPoint(PlotPoints.Select(plot => plot.X).DefaultIfEmpty(0).Max(), PlotPoints.Select(plot => plot.Y).DefaultIfEmpty(0).Max());
         }
     }
 }
