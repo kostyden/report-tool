@@ -1,26 +1,30 @@
 ﻿namespace ReportTool
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
 
     public class DataReaderProvider : IDataReaderProvider
     {
-        private List<IDataReader> _readers;
+        private Dictionary<string, IDataReader> _readers;
 
         public DataReaderProvider(IEnumerable<IDataReader> readers)
         {
-            _readers = readers.ToList();
+            _readers = readers.SelectMany(reader => ((MemberInfo)reader.GetType()).GetCustomAttributes<SupportedFileExtensionAttribute>().Select(attribute => new
+            {
+                Extension =attribute.Extension,
+                Reader = reader
+            })).ToDictionary(info => info.Extension, info => info.Reader);
         }
 
         public IDataReader GetByExtension(string fileExtension)
         {
-            return _readers.Where(reader => ((MemberInfo)reader.GetType())
-                                                               .GetCustomAttributes<SupportedFileExtensionAttribute>()
-                                                               .Any(attr => attr.Extension.Equals(fileExtension)))
-                           .DefaultIfEmpty(new NotSupportedDataReader())
-                           .First();
+            if (_readers.TryGetValue(fileExtension, out IDataReader reader))
+            {
+                return reader;
+            }
+
+            return new NotSupportedDataReader();
         }
     }
 }
