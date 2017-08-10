@@ -79,6 +79,7 @@
     <Compile Include="MainViewModelTests\MainViewModelTestsBase.cs" />
     <Compile Include="MainViewModelTests\ReportDataCollectionTests.cs" />
     <Compile Include="MainViewModelTests\ToggleColumnSelectionCommandTests.cs" />
+    <Compile Include="NotSupportedDataReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScatterPointToCoordinateValueConverterTests.cs" />
     <Compile Include="ScatterPointToTextConverterTests.cs" />

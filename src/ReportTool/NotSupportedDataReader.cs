@@ -6,7 +6,7 @@
     {
         public DataResult Read(string path)
         {
-            throw new NotImplementedException();
+            return DataResult.CreateFailed($"Reader not found for file {path}");
         }
     }
 }
