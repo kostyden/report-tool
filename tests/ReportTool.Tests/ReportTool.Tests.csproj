@@ -70,6 +70,7 @@
     <Compile Include="AcceptenceTests.cs" />
     <Compile Include="CommandTests.cs" />
     <Compile Include="DataColumnViewModelTests.cs" />
+    <Compile Include="DataReaderProviderTests.cs" />
     <Compile Include="DataResultTests.cs" />
     <Compile Include="FileDataProviderTests.cs" />
     <Compile Include="MainViewModelTests\GenerateReportDataCommandTests.cs" />
