@@ -10,11 +10,7 @@
 
         public DataReaderProvider(IEnumerable<IDataReader> readers)
         {
-            _readers = readers.SelectMany(reader => ((MemberInfo)reader.GetType()).GetCustomAttributes<SupportedFileExtensionAttribute>().Select(attribute => new
-            {
-                Extension =attribute.Extension,
-                Reader = reader
-            })).ToDictionary(info => info.Extension, info => info.Reader);
+            _readers = readers.SelectMany(GetSupportedExtensions).ToDictionary(info => info.Extension, info => info.Reader);
         }
 
         public IDataReader GetByExtension(string fileExtension)
@@ -25,6 +21,12 @@
             }
 
             return new NotSupportedDataReader();
+        }
+
+        private IEnumerable<(string Extension, IDataReader Reader)> GetSupportedExtensions(IDataReader reader)
+        {
+            MemberInfo info = reader.GetType();
+            return info.GetCustomAttributes<SupportedFileExtensionAttribute>().Select(attribute => (attribute.Extension, reader));
         }
     }
 }
