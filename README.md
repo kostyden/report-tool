@@ -9,7 +9,7 @@
  
  
 ### Test
- - Open and build using Visual Studio solution file Palindrome.sln
+ - Open and build using Visual Studio solution file ReportTool.sln
  - Run tests with any test runner which support NUnit Framework tests
  
 ### Run
