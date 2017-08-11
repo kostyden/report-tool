@@ -16,6 +16,7 @@
         {
             var extension = Path.GetExtension(path);
             var reader = _readerProvider.GetByExtension(extension);
+
             return reader.Read(path);
         }
     }

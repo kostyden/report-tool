@@ -1,7 +1,7 @@
 ﻿namespace ReportTool.DataProviders
 {
-    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class DataResult
     {
@@ -16,7 +16,7 @@
 
         public static DataResult CreateFailed(string message)
         {
-            var data = new List<Dictionary<string, double>>();
+            var data = Enumerable.Empty<Dictionary<string, double>>();
             return new DataResult(data, message);
         }
 
