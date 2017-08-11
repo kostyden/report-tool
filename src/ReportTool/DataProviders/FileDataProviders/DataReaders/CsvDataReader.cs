@@ -21,25 +21,32 @@
             var data = new List<Dictionary<string, double>>();
             using (var reader = new StreamReader(path))
             {
-                List<string> columnsNames = null;
+                List<string> columnNames = null;
                 while (reader.EndOfStream == false)
                 {
-                    if (columnsNames == null)
+                    if (columnNames == null)
                     {
-                        columnsNames = reader.ReadLine().Split(_delimeter).ToList();
+                        columnNames = ReadValues(reader).ToList();
+                    }
 
-                    }
-                    else
-                    {
-                        var values = Array.ConvertAll(reader.ReadLine().Split(_delimeter), value => double.Parse(value))
-                                          .Select((value, index) => new { Value = value, Index = index })
-                                          .ToDictionary(info => columnsNames[info.Index], info => info.Value);
-                        data.Add(values);
-                    }
+                    var values = ReadLineData(reader, columnNames);
+                    data.Add(values);
                 }
             }
 
             return DataResult.CreateSuccessful(data);
+        }
+
+        private Dictionary<string, double> ReadLineData(StreamReader reader, List<string> columnNames)
+        {
+            return ReadValues(reader).Select(value => double.Parse(value))
+                                     .Select((value, index) => new { Value = value, Index = index })
+                                     .ToDictionary(info => columnNames[info.Index], info => info.Value);
+        }
+
+        private IEnumerable<string> ReadValues(StreamReader reader)
+        {
+            return reader.ReadLine().Split(_delimeter);
         }
     }
 }
