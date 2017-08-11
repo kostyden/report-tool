@@ -1,10 +1,11 @@
-﻿namespace ReportTool.Tests.MainViewModelTests
+﻿namespace ReportTool.Tests.UI.ViewModels.MainViewModelTests
 {
     using FluentAssertions;
     using NSubstitute;
     using NUnit.Framework;
     using ReportTool.DataProviders;
     using ReportTool.Reports;
+    using ReportTool.UI;
     using System.Collections.Generic;
     using System.Linq;
 

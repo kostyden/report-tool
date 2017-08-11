@@ -1,8 +1,9 @@
-﻿namespace ReportTool.Tests
+﻿namespace ReportTool.Tests.UI.ViewModels
 {
     using FluentAssertions;
     using NUnit.Framework;
-    using System;
+    using ReportTool.UI;
+    using ReportTool.UI.ViewModels;
 
     [TestFixture]
     class DataColumnViewModelTests

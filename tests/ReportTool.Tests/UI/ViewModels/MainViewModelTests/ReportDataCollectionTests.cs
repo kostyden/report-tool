@@ -1,4 +1,4 @@
-﻿namespace ReportTool.Tests.MainViewModelTests
+﻿namespace ReportTool.Tests.UI.ViewModels.MainViewModelTests
 {
     using FluentAssertions;
     using NSubstitute;

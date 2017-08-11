@@ -1,4 +1,4 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.UI.ViewModels
 {
     using ReportTool.Commands;
     using ReportTool.DataProviders;

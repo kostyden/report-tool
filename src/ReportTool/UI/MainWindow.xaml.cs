@@ -1,5 +1,6 @@
 ﻿namespace ReportTool
 {
+    using ReportTool.UI.ViewModels;
     using System.Windows;
 
     public partial class MainWindow : Window

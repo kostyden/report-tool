@@ -2,7 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:local="clr-namespace:ReportTool"
-                    xmlns:converters="clr-namespace:ReportTool.ValueConverters"
+                    xmlns:converters="clr-namespace:ReportTool.UI.ValueConverters"
+                    xmlns:ui="clr-namespace:ReportTool.UI"
+                    xmlns:viewmodels="clr-namespace:ReportTool.UI.ViewModels"
                     xmlns:reports="clr-namespace:ReportTool.Reports">
     <Color x:Key="AbscissaPrimaryColor">#0055B5</Color>
     <Color x:Key="AbscissaSecondaryColor">#0012B5</Color>
@@ -33,15 +35,15 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Cursor" Value="Hand"/>
             </Trigger>
-            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.NotSelected}">
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static ui:SelectionType.NotSelected}">
                 <Setter Property="Background" Value="{StaticResource NotSelectedPrimarySolidColorBrush}" />
                 <Setter Property="BorderBrush" Value="{StaticResource NotSelectedSecondarySolidColorBrush}" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Abscissa}">
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static ui:SelectionType.Abscissa}">
                 <Setter Property="Background" Value="{StaticResource AbscissaPrimarySolidColorBrush}" />
                 <Setter Property="BorderBrush" Value="{StaticResource AbscissaSecondarySolidColorBrush}" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Ordinate}">
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static ui:SelectionType.Ordinate}">
                 <Setter Property="Background" Value="{StaticResource OrdinatePrimarySolidColorBrush}" />
                 <Setter Property="BorderBrush" Value="{StaticResource OrdinateSecondarySolidColorBrush}" />
             </DataTrigger>
@@ -51,19 +53,19 @@
     <Style x:Key="DataColumnText" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="Black"></Setter>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.NotSelected}">
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static ui:SelectionType.NotSelected}">
                 <Setter Property="Foreground" Value="{StaticResource DefaultTextSolidColorBrush}" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Abscissa}">
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static ui:SelectionType.Abscissa}">
                 <Setter Property="Foreground" Value="{StaticResource SelectedTexSolidColorBrush}" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static local:SelectionType.Ordinate}">
+            <DataTrigger Binding="{Binding SelectionType}" Value="{x:Static ui:SelectionType.Ordinate}">
                 <Setter Property="Foreground" Value="{StaticResource SelectedTexSolidColorBrush}" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
-    <DataTemplate x:Key="DataColumnTemplate" DataType="{x:Type local:DataColumnViewModel}">
+
+    <DataTemplate x:Key="DataColumnTemplate" DataType="{x:Type viewmodels:DataColumnViewModel}">
         <Border Margin="10 2" BorderThickness="2" CornerRadius="6" Style="{StaticResource DataColumnStyle}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">

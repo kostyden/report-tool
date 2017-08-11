@@ -77,7 +77,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\Command.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\CsvDataReader.cs" />
-    <Compile Include="DataColumnViewModel.cs" />
+    <Compile Include="UI\VIewModels\DataColumnViewModel.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaderProvider.cs" />
     <Compile Include="DataProviders\DataResult.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\ExcelDataReader.cs" />
@@ -88,20 +88,20 @@
     <Compile Include="DataProviders\IDataReaderProvider.cs" />
     <Compile Include="Reports\IScatterReportCalculator.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\JsonDataReader.cs" />
-    <Compile Include="MainViewModel.cs" />
+    <Compile Include="UI\VIewModels\MainViewModel.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\NotSupportedDataReader.cs" />
     <Compile Include="Reports\ScatterInputData.cs" />
     <Compile Include="Reports\ScatterLine.cs" />
     <Compile Include="Reports\ScatterPoint.cs" />
-    <Compile Include="ValueConverters\ScatterPointToTextConverter.cs" />
-    <Compile Include="ValueConverters\ScatterPointToWindowsPointConverter.cs" />
-    <Compile Include="ValueConverters\ScatterPointToCoordinateValueConverter.cs" />
+    <Compile Include="UI\ValueConverters\ScatterPointToTextConverter.cs" />
+    <Compile Include="UI\ValueConverters\ScatterPointToWindowsPointConverter.cs" />
+    <Compile Include="UI\ValueConverters\ScatterPointToCoordinateValueConverter.cs" />
     <Compile Include="Reports\Calculators\ScatterReportCalculator.cs" />
     <Compile Include="Reports\ScatterReportData.cs" />
-    <Compile Include="SelectionType.cs" />
+    <Compile Include="UI\SelectionType.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="SupportedFileExtensionAttribute.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -109,11 +109,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ViewResources.xaml">
+    <Page Include="UI\Resources\ViewResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

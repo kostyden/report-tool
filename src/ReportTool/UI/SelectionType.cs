@@ -1,7 +1,5 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.UI
 {
-    using System;
-
     public enum SelectionType
     {
         NotSelected = 0,

@@ -4,6 +4,7 @@
     using ReportTool.DataProviders.FileDataProviders;
     using ReportTool.DataProviders.FileDataProviders.DataReaders;
     using ReportTool.Reports.Calculators;
+    using ReportTool.UI.ViewModels;
     using System;
 
     class Startup

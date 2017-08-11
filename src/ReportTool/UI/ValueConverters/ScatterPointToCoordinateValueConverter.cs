@@ -1,4 +1,4 @@
-﻿namespace ReportTool.ValueConverters
+﻿namespace ReportTool.UI.ValueConverters
 {
     using System;
     using System.Globalization;
