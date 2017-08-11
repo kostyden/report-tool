@@ -1,6 +1,5 @@
 ﻿namespace ReportTool.UI.ViewModels
 {
-    using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
 

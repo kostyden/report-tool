@@ -30,8 +30,7 @@
                     <Button AutomationProperties.AutomationId="generateReportData" Content="Generate" Margin="10" Padding="10, 2" 
                             Command="{Binding GenerateReportDataCommand}"/>
                 </StackPanel>
-                <ItemsControl ItemsSource="{Binding Columns}" ItemTemplate="{StaticResource DataColumnTemplate}">
-                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding Columns}" ItemTemplate="{StaticResource DataColumnTemplate}" />
             </StackPanel>
             <DockPanel LastChildFill="true" Margin="0 0 36 0">
                 <Border DockPanel.Dock="Bottom" Margin="36 0 0 0" Background="Transparent" BorderBrush="{StaticResource AbscissaPrimarySolidColorBrush}" BorderThickness="0 2 0 0">
