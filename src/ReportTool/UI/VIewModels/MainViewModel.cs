@@ -7,12 +7,10 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.ComponentModel;
     using System.Linq;
-    using System.Runtime.CompilerServices;
     using System.Windows.Input;
 
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ViewModel
     {
         private readonly IDataProvider _provider;
 
@@ -21,8 +19,6 @@
         private IEnumerable<Dictionary<string, double>> _currentData;
 
         private IEnumerable<SelectionType> _requiredSelectionTypes = new[] { SelectionType.Abscissa, SelectionType.Ordinate };
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private ReadOnlyCollection<DataColumnViewModel> _columns;
 
@@ -35,8 +31,7 @@
 
             private set
             {
-                _columns = value;
-                RaisePropertyChanged();
+                SetValue(ref _columns, value);
             }
         }
 
@@ -51,8 +46,7 @@
 
             private set
             {
-                _errorMessage = value;
-                RaisePropertyChanged();
+                SetValue(ref _errorMessage, value);
             }
         }
 
@@ -83,8 +77,7 @@
 
             private set
             {
-                _report = value;
-                RaisePropertyChanged();
+                SetValue(ref _report, value);
                 RaisePropertyChanged(nameof(ReportDataCollection));
             }
         }
@@ -107,6 +100,14 @@
 
         public ICommand ToggleColumnSelectionCommand { get; }
 
+        private Command GenerateReportDataCommandImpl
+        {
+            get
+            {
+                return (Command)GenerateReportDataCommand;
+            }
+        }
+
         public MainViewModel(IDataProvider provider, IScatterReportCalculator calculator)
         {
             _provider = provider;
@@ -114,6 +115,7 @@
 
             Columns = new ReadOnlyCollection<DataColumnViewModel>(new List<DataColumnViewModel>());
             Report = new ScatterReportData(Enumerable.Empty<ScatterPoint>(), ScatterLine.Zero);
+
             LoadDataCommand = new Command(param => LoadData((string)param));
             GenerateReportDataCommand = new Command(param => GenerateReportData(), param => IsAllRequiredColumnsSelected());
             ToggleColumnSelectionCommand = new Command(column => ToggleColumnSelection((DataColumnViewModel)column));
@@ -123,13 +125,18 @@
         {
             var dataResult = _provider.GetFrom(path);
             _currentData = dataResult.Data;
-            var uniqueColumns = dataResult.Data.SelectMany(row => row.Keys).Distinct().Select(columnName => new DataColumnViewModel(columnName)).ToList();
-            Columns = new ReadOnlyCollection<DataColumnViewModel>(uniqueColumns);
+
+            Columns = GetColumnsFrom(_currentData);
             ErrorMessage = dataResult.ErrorMessage;
+
             Report = ScatterReportData.Empty;
-            RaisePropertyChanged(nameof(AbscissaColumnName));
-            RaisePropertyChanged(nameof(OrdinateColumnName));
-            ((Command)GenerateReportDataCommand).RaiseCanExecuteChanged();
+            NotifyColumnsChanged();
+        }
+
+        private ReadOnlyCollection<DataColumnViewModel> GetColumnsFrom(IEnumerable<Dictionary<string, double>> data)
+        {
+            var uniqueColumns = data.SelectMany(row => row.Keys).ToSet().Select(columnName => new DataColumnViewModel(columnName)).ToList();
+            return new ReadOnlyCollection<DataColumnViewModel>(uniqueColumns);
         }
 
         private void GenerateReportData()
@@ -144,12 +151,6 @@
             Report = _calculator.Calculate(inputData);
         }
 
-        private bool IsAllRequiredColumnsSelected()
-        {
-            var alreadySelectedTypes = Columns.Where(column => column.IsSelected).Select(column => column.SelectionType).ToSet();
-            return _requiredSelectionTypes.All(type => alreadySelectedTypes.Contains(type));
-        }
-
         private void ToggleColumnSelection(DataColumnViewModel column)
         {
             column.SelectionType = GetAvailableSelectionTypeFor(column);
@@ -159,9 +160,20 @@
                 Report = ScatterReportData.Empty;
             }
 
+            NotifyColumnsChanged();
+        }
+
+        private bool IsAllRequiredColumnsSelected()
+        {
+            var alreadySelectedTypes = GetSelectedTypes();
+            return _requiredSelectionTypes.All(type => alreadySelectedTypes.Contains(type));
+        }
+
+        private void NotifyColumnsChanged()
+        {
             RaisePropertyChanged(nameof(AbscissaColumnName));
             RaisePropertyChanged(nameof(OrdinateColumnName));
-            ((Command)GenerateReportDataCommand).RaiseCanExecuteChanged();
+            GenerateReportDataCommandImpl.RaiseCanExecuteChanged();
         }
 
         private SelectionType GetAvailableSelectionTypeFor(DataColumnViewModel viewmodel)
@@ -171,25 +183,25 @@
                 return SelectionType.NotSelected;
             }
 
-            var alreadySelectedTypes = Columns.Where(column => column.IsSelected).Select(column => column.SelectionType).ToSet();
+            var alreadySelectedTypes = GetSelectedTypes();
             Func<SelectionType, bool> notSelectedYet = type => alreadySelectedTypes.Contains(type) == false;
 
             return _requiredSelectionTypes.Where(notSelectedYet)
-                                           .DefaultIfEmpty(SelectionType.NotSelected)
-                                           .First();
+                                          .DefaultIfEmpty(SelectionType.NotSelected)
+                                          .First();
         }
 
         private string GetColumnNameFor(SelectionType type)
         {
             return Columns.Where(column => column.SelectionType == type)
-                              .Select(column => column.Name)
-                              .DefaultIfEmpty("not selected")
-                              .First();
+                          .Select(column => column.Name)
+                          .DefaultIfEmpty("not selected")
+                          .First();
         }
 
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        private HashSet<SelectionType> GetSelectedTypes()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            return Columns.Where(column => column.IsSelected).Select(column => column.SelectionType).ToSet();
         }
     }
 }

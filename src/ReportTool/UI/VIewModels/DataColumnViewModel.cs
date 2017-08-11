@@ -1,16 +1,10 @@
 ﻿namespace ReportTool.UI.ViewModels
 {
-    using System;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-
-    public class DataColumnViewModel : INotifyPropertyChanged
+    public class DataColumnViewModel : ViewModel
     {
         public string Name { get; }
 
         private SelectionType _selectionType;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public SelectionType SelectionType
         {
@@ -21,13 +15,7 @@
 
             set
             {
-                if (_selectionType == value)
-                {
-                    return;
-                }
-
-                _selectionType = value;
-                RaisePropertyChanged();
+                SetValue(ref _selectionType, value);
             }
         }
 
@@ -43,11 +31,6 @@
         {
             Name = columnName;
             SelectionType = SelectionType.NotSelected;
-        }
-
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -154,15 +154,46 @@
         }
 
         [Test]
-        public void LoadDataCommand_WhenGetSuccessfulResultShouldRaisePropertyChangedForErrorMessage()
+        public void LoadDataCommand_ShouldRaisePropertyChangedForErrorMessageWhenSuccessfulResultChangedToFailed()
         {
             var validPath = @"data.xlsx";
             var data = new[]
             {
                 new Dictionary<string, double> { { "five", 0}, { "six", 0 } }
             };
-            var result = DataResult.CreateSuccessful(data);
-            FakeProvider.GetFrom(validPath).Returns(result);
+            var successfulResult = DataResult.CreateSuccessful(data);
+            FakeProvider.GetFrom(validPath).Returns(successfulResult);
+
+            var invalidPath = @"notexisted.file";
+            var failedResult = DataResult.CreateFailed("File not found");
+            FakeProvider.GetFrom(invalidPath).Returns(failedResult);
+
+            ViewModel.LoadDataCommand.Execute(validPath);
+
+            ViewModel.MonitorEvents();
+
+            ViewModel.LoadDataCommand.Execute(invalidPath);
+
+            ViewModel.ShouldRaisePropertyChangeFor(viewModel => viewModel.ErrorMessage);
+        }
+
+        [Test]
+        public void LoadDataCommand_ShouldRaisePropertyChangedForErrorMessageWhenFailedResultChangedToSuccessful()
+        {
+            var validPath = @"data.xlsx";
+            var data = new[]
+            {
+                new Dictionary<string, double> { { "five", 0}, { "six", 0 } }
+            };
+            var successfulResult = DataResult.CreateSuccessful(data);
+            FakeProvider.GetFrom(validPath).Returns(successfulResult);
+
+            var invalidPath = @"notexisted.file";
+            var failedResult = DataResult.CreateFailed("File not found");
+            FakeProvider.GetFrom(invalidPath).Returns(failedResult);
+
+            ViewModel.LoadDataCommand.Execute(invalidPath);
+
             ViewModel.MonitorEvents();
 
             ViewModel.LoadDataCommand.Execute(validPath);
