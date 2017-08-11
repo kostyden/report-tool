@@ -9,7 +9,12 @@
         [STAThread]
         static void Main()
         {
-            var dataProvider = new TestDataProvider();
+            var readers = new IDataReader[]
+            {
+                new ExcelDataReader()
+            };
+            var readerProvider = new DataReaderProvider(readers);
+            var dataProvider = new FileDataProvider(readerProvider);
             var calculator = new ScatterReportCalculator();
             var viewmodel = new MainViewModel(dataProvider, calculator);
 
