@@ -1,9 +1,10 @@
-﻿namespace ReportTool.Tests
+﻿namespace ReportTool.Tests.DataProviders
 {
     using System;
     using NUnit.Framework;
     using System.Collections.Generic;
     using FluentAssertions;
+    using ReportTool.DataProviders;
 
     [TestFixture]
     class DataResultTests

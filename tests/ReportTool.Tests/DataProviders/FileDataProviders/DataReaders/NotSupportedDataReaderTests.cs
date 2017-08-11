@@ -1,7 +1,8 @@
-﻿namespace ReportTool.Tests
+﻿namespace ReportTool.Tests.DataProviders.FileDataProviders.DataReaders
 {
     using FluentAssertions;
     using NUnit.Framework;
+    using ReportTool.DataProviders.FileDataProviders.DataReaders;
     using System;
 
     [TestFixture]

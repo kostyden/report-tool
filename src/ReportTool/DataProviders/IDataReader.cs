@@ -1,4 +1,4 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.DataProviders
 {
     using System.Collections.Generic;
 

@@ -1,7 +1,10 @@
-﻿namespace ReportTool.Tests
+﻿namespace ReportTool.Tests.DataProviders.FileDataProviders
 {
     using FluentAssertions;
     using NUnit.Framework;
+    using ReportTool.DataProviders;
+    using ReportTool.DataProviders.FileDataProviders;
+    using ReportTool.DataProviders.FileDataProviders.DataReaders;
     using System;
     using System.Collections.Generic;
 

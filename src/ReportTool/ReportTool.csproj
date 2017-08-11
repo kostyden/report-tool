@@ -76,20 +76,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="CsvDataReader.cs" />
+    <Compile Include="DataProviders\FileDataProviders\DataReaders\CsvDataReader.cs" />
     <Compile Include="DataColumnViewModel.cs" />
-    <Compile Include="DataReaderProvider.cs" />
-    <Compile Include="DataResult.cs" />
-    <Compile Include="ExcelDataReader.cs" />
+    <Compile Include="DataProviders\FileDataProviders\DataReaderProvider.cs" />
+    <Compile Include="DataProviders\DataResult.cs" />
+    <Compile Include="DataProviders\FileDataProviders\DataReaders\ExcelDataReader.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="FileDataProvider.cs" />
-    <Compile Include="IDataProvider.cs" />
-    <Compile Include="IDataReader.cs" />
-    <Compile Include="IDataReaderProvider.cs" />
+    <Compile Include="DataProviders\FileDataProviders\FileDataProvider.cs" />
+    <Compile Include="DataProviders\IDataProvider.cs" />
+    <Compile Include="DataProviders\IDataReader.cs" />
+    <Compile Include="DataProviders\IDataReaderProvider.cs" />
     <Compile Include="IScatterReportCalculator.cs" />
-    <Compile Include="JsonDataReader.cs" />
+    <Compile Include="DataProviders\FileDataProviders\DataReaders\JsonDataReader.cs" />
     <Compile Include="MainViewModel.cs" />
-    <Compile Include="NotSupportedDataReader.cs" />
+    <Compile Include="DataProviders\FileDataProviders\DataReaders\NotSupportedDataReader.cs" />
     <Compile Include="ScatterInputData.cs" />
     <Compile Include="ScatterLine.cs" />
     <Compile Include="ScatterPoint.cs" />
@@ -144,6 +144,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ScatterReport\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

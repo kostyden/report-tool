@@ -1,5 +1,6 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.DataProviders.FileDataProviders
 {
+    using ReportTool.DataProviders;
     using System.IO;
 
     public class FileDataProvider : IDataProvider

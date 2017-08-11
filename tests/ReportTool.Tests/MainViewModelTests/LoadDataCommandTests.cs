@@ -3,6 +3,7 @@
     using FluentAssertions;
     using NSubstitute;
     using NUnit.Framework;
+    using ReportTool.DataProviders;
     using System;
     using System.Collections.Generic;
     using System.Linq;

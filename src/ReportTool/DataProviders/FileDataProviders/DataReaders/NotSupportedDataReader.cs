@@ -1,5 +1,6 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.DataProviders.FileDataProviders.DataReaders
 {
+    using ReportTool.DataProviders;
     using System;
 
     public class NotSupportedDataReader : IDataReader

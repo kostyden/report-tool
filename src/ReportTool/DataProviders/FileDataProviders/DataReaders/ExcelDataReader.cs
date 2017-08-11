@@ -1,8 +1,9 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.DataProviders.FileDataProviders.DataReaders
 {
     using DocumentFormat.OpenXml;
     using DocumentFormat.OpenXml.Packaging;
     using DocumentFormat.OpenXml.Spreadsheet;
+    using ReportTool.DataProviders;
     using System;
     using System.Collections.Generic;
     using System.Linq;

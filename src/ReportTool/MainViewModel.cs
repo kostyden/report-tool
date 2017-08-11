@@ -1,6 +1,7 @@
 ﻿namespace ReportTool
 {
     using ReportTool.Commands;
+    using ReportTool.DataProviders;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;

@@ -1,35 +1,37 @@
-﻿namespace ReportTool.Tests
+﻿namespace ReportTool.Tests.DataProviders.FileDataProviders.DataReaders
 {
     using FluentAssertions;
     using NUnit.Framework;
+    using ReportTool.DataProviders.FileDataProviders.DataReaders;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
 
     [TestFixture]
-    class CsvDataReaderTests
+    class JsonDataReaderTests
     {
         [Test]
         public void ShouldBeDecoratedWithExpectedAttribute()
         {
-            typeof(CsvDataReader).Should().BeDecoratedWith<SupportedFileExtensionAttribute>(attribute => attribute.Extension.Equals(".csv"));
+            typeof(JsonDataReader).Should().BeDecoratedWith<SupportedFileExtensionAttribute>(attribute => attribute.Extension.Equals(".json"));
         }
 
         [Test]
-        [TestCase(@"DataReadersTestCases\CsvDataReaderTestCase1TabDelimited.csv", '\t')]
-        [TestCase(@"DataReadersTestCases\CsvDataReaderTestCase1CommaDelimited.csv", ',')]
-        public void Read_ShouldReturnSuccessfulResultWithExpectedData(string fileName, char delimeter)
+        public void Read_ShouldReturnSuccessfulResultWithExpectedData()
         {
             var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
+            var fileName = @"DataReadersTestCases\JsonDataReaderTestCase1.json";
             var path = Path.Combine(directoryName, fileName);
             var expectedData = new[]
             {
-                new Dictionary<string, double> {{ "one", 0.4 }, { "two", 11.03 }, { "three", 13.333 } },
-                new Dictionary<string, double> {{ "one", 0.5 }, { "two", 12.05 }, { "three", 22.33 } },
-                new Dictionary<string, double> {{ "one", 0.6 }, { "two", 0.06 }, { "three", -40.23 } }
+                new Dictionary<string, double> {{ "weight", 150.05 }, { "speed", 220.15 }, { "tyre-consumption", 0.9845 } },
+                new Dictionary<string, double> {{ "weight", 148.57 }, { "speed", 221.99 }, { "tyre-consumption", 0.9212 } },
+                new Dictionary<string, double> {{ "weight", 146.98 }, { "speed", 225.05 }, { "tyre-consumption", 0.8601 } },
+                new Dictionary<string, double> {{ "weight", 144.00 }, { "speed", 228.45 }, { "tyre-consumption", 0.7915 } },
+                new Dictionary<string, double> {{ "weight", 142.00 }, { "speed", 229.98 }, { "tyre-consumption", 0.7000 } }
             };
-            var reader = new CsvDataReader(delimeter);
+            var reader = new JsonDataReader();
 
             var result = reader.Read(path);
 
@@ -40,10 +42,10 @@
         public void Read_ShouldReturnFailedResultWithExpectedMessageWhenFileNotFound()
         {
             var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var fileName = @"DataReadersTestCases\NotExistedFile.csv";
+            var fileName = @"DataReadersTestCases\NotExistedFile.json";
             var path = Path.Combine(directoryName, fileName);
 
-            var reader = new CsvDataReader(';');
+            var reader = new JsonDataReader();
 
             var result = reader.Read(path);
 
@@ -55,15 +57,15 @@
         public void Read_ShouldReturnFailedResultWithExpectedMessageWhenValuesInWrongFormat()
         {
             var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var fileName = @"DataReadersTestCases\CsvDataReaderTestCase2CommaDelimited.csv";
+            var fileName = @"DataReadersTestCases\JsonDataReaderTestCase2.json";
             var path = Path.Combine(directoryName, fileName);
 
-            var reader = new CsvDataReader(',');
+            var reader = new JsonDataReader();
 
             var result = reader.Read(path);
 
             result.Data.Should().BeEmpty();
-            result.ErrorMessage.Should().ContainEquivalentOf("string was not in a correct format");
+            result.ErrorMessage.Should().ContainEquivalentOf("could not convert string to double");
         }
     }
 }

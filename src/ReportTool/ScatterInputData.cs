@@ -9,11 +9,6 @@
 
         public string AbscissaColumnName { get; set; }
 
-        internal object Select(Func<object, ScatterPoint> p)
-        {
-            throw new NotImplementedException();
-        }
-
         public string OrdinateColumnName { get; set; }
     }
 }

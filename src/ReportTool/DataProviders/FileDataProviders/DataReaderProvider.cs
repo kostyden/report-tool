@@ -1,5 +1,7 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.DataProviders.FileDataProviders
 {
+    using ReportTool.DataProviders;
+    using ReportTool.DataProviders.FileDataProviders.DataReaders;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
