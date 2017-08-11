@@ -100,7 +100,7 @@
     <Compile Include="Reports\ScatterReportData.cs" />
     <Compile Include="UI\SelectionType.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="SupportedFileExtensionAttribute.cs" />
+    <Compile Include="DataProviders\FileDataProviders\SupportedFileExtensionAttribute.cs" />
     <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
