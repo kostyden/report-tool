@@ -6,6 +6,7 @@
     using ReportTool.DataProviders;
     using ReportTool.Reports;
     using ReportTool.UI;
+    using ReportTool.UI.ViewModels;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -26,10 +27,9 @@
         [Test]
         public void AbscissaColumnName_ShouldReturnNameOfColumnSelectedForAbscissaWhenSelected()
         {
-            ConfigureColumns();
+            LoadColumns();
             var selectedColumn = ViewModel.Columns.First(column => column.Name.Equals("two"));
             selectedColumn.SelectionType = SelectionType.Abscissa;
-
 
             ViewModel.AbscissaColumnName.Should().Be(selectedColumn.Name);
         }
@@ -37,17 +37,17 @@
         [Test]
         public void AbscissaColumnName_ShouldReturnDefaultTextWhenAbscissaColumnNotSelected()
         {
-            ConfigureColumns();
+            LoadColumns();
             var selectedColumn = ViewModel.Columns.First(column => column.Name.Equals("one"));
             selectedColumn.SelectionType = SelectionType.Ordinate;
 
-            ViewModel.AbscissaColumnName.Should().Be("not selected");
+            ViewModel.AbscissaColumnName.Should().Be(MainViewModel.NOT_SELECTED);
         }
 
         [Test]
         public void OrdinateColumnName_ShouldReturnNameOfColumnSelectedForAbscissaWhenSelected()
         {
-            ConfigureColumns();
+            LoadColumns();
             var selectedColumn = ViewModel.Columns.First(column => column.Name.Equals("two"));
             selectedColumn.SelectionType = SelectionType.Ordinate;
 
@@ -58,14 +58,14 @@
         [Test]
         public void OrdinateColumnName_ShouldReturnDefaultTextWhenAbscissaColumnNotSelected()
         {
-            ConfigureColumns();
+            LoadColumns();
             var selectedColumn = ViewModel.Columns.First(column => column.Name.Equals("one"));
             selectedColumn.SelectionType = SelectionType.Abscissa;
 
-            ViewModel.OrdinateColumnName.Should().Be("not selected");
+            ViewModel.OrdinateColumnName.Should().Be(MainViewModel.NOT_SELECTED);
         }
 
-        private void ConfigureColumns()
+        private void LoadColumns()
         {
             var data = new[]
 {

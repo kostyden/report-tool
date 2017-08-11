@@ -12,6 +12,8 @@
 
     public class MainViewModel : ViewModel
     {
+        public const string NOT_SELECTED = "not selected";
+
         private readonly IDataProvider _provider;
 
         private readonly IScatterReportCalculator _calculator;
@@ -195,7 +197,7 @@
         {
             return Columns.Where(column => column.SelectionType == type)
                           .Select(column => column.Name)
-                          .DefaultIfEmpty("not selected")
+                          .DefaultIfEmpty(NOT_SELECTED)
                           .First();
         }
 

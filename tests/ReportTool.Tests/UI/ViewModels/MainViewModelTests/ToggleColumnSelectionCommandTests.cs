@@ -138,10 +138,7 @@
             FakeScatterReportCalculator.Calculate(null).ReturnsForAnyArgs(dummyReportData);
 
             ViewModel.LoadDataCommand.Execute("dummy.path");
-            var abscissaColumn = ViewModel.Columns.First(column => column.Name.Equals("seven"));
-            var ordinateColumn = ViewModel.Columns.First(column => column.Name.Equals("nine"));
-            abscissaColumn.SelectionType = SelectionType.Abscissa;
-            ordinateColumn.SelectionType = SelectionType.Ordinate;
+            var (abscissaColumn, ordinateColumn) = SelectColumnsForReport("seven", "nine");
 
             ViewModel.GenerateReportDataCommand.Execute(null);
             ViewModel.ToggleColumnSelectionCommand.Execute(abscissaColumn);

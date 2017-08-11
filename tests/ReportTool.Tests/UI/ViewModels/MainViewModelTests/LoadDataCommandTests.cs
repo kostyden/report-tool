@@ -7,14 +7,12 @@
     using ReportTool.Reports;
     using ReportTool.UI;
     using ReportTool.UI.ViewModels;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     class LoadDataCommandTests : MainViewModelTestsBase
     {
         [Test]
-        public void LoadDataCommand_WhenGetSuccessfulResultShouldUpdateColumnsWithUniqueValues()
+        public void ShouldUpdateColumnsWithUniqueValuesWhenGetSuccessfulResult()
         {
             var validPath = @"somefile.xls";
             var data = new[]
@@ -37,7 +35,7 @@
         }
 
         [Test]
-        public void LoadDataCommand_WhenGetSuccessfulResultShouldRaiseOnPropertyChangedForColumns()
+        public void ShouldRaiseOnPropertyChangedForColumnsWhenGetSuccessfulResult()
         {
             var validPath = @"anotherFile.xls";
             var data = new[]
@@ -125,19 +123,16 @@
             FakeScatterReportCalculator.Calculate(null).ReturnsForAnyArgs(dummyReportData);
 
             ViewModel.LoadDataCommand.Execute("dummy.path");
-            var abscissaColumn = ViewModel.Columns.First(column => column.Name.Equals("seven"));
-            var ordinateColumn = ViewModel.Columns.First(column => column.Name.Equals("nine"));
-            abscissaColumn.SelectionType = SelectionType.Abscissa;
-            ordinateColumn.SelectionType = SelectionType.Ordinate;
-
+            var (abscissaColumn, ordinateColumn) = SelectColumnsForReport("seven", "nine");
             ViewModel.GenerateReportDataCommand.Execute(null);
+
             ViewModel.LoadDataCommand.Execute("dummy2.path");
 
             ViewModel.Report.ShouldBeEquivalentTo(ScatterReportData.Empty);
         }
 
         [Test]
-        public void LoadDataCommand_WhenGetSuccessfulResultShouldClearErrorMessage()
+        public void ShouldClearErrorMessageWhenGetSuccessfulResult()
         {
             var validPath = @"file.csv";
             var data = new[]
@@ -154,7 +149,7 @@
         }
 
         [Test]
-        public void LoadDataCommand_ShouldRaisePropertyChangedForErrorMessageWhenSuccessfulResultChangedToFailed()
+        public void ShouldRaisePropertyChangedForErrorMessageWhenSuccessfulResultChangedToFailed()
         {
             var validPath = @"data.xlsx";
             var data = new[]
@@ -178,7 +173,7 @@
         }
 
         [Test]
-        public void LoadDataCommand_ShouldRaisePropertyChangedForErrorMessageWhenFailedResultChangedToSuccessful()
+        public void ShouldRaisePropertyChangedForErrorMessageWhenFailedResultChangedToSuccessful()
         {
             var validPath = @"data.xlsx";
             var data = new[]
@@ -202,7 +197,7 @@
         }
 
         [Test]
-        public void LoadDataCommand_WhenGetFailedResultShouldClearColumns()
+        public void ShouldClearColumnsWhenGetFailedResult()
         {
             var path = @"notExistedFile.xls";
             var failedResult = DataResult.CreateFailed("File not found");
@@ -214,7 +209,7 @@
         }
 
         [Test]
-        public void LoadDataCommand_WhenGetFailedResultShouldRaiseOnPropertyChangedForColumns()
+        public void ShouldRaiseOnPropertyChangedForColumnsWhenGetFailedResult()
         {
             var path = @"wrongType.xls";
             var failedResult = DataResult.CreateFailed("Provider doesn not support this type of file");
@@ -227,7 +222,7 @@
         }
 
         [Test]
-        public void LoadDataCommand_WhenGetFailedResultShouldRaiseOnPropertyChangedForErrorMessage()
+        public void ShouldRaiseOnPropertyChangedForErrorMessageWhenGetFailedResult()
         {
             var path = @"file.txt";
             var failedResult = DataResult.CreateFailed("Provider doesn not support this type of file");

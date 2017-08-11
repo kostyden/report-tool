@@ -70,7 +70,7 @@
         }
 
         [Test]
-        public void ShouldPassCorrectInputValuesToTheCalculatorWhenSuccessfulyGetData()
+        public void ShouldPassCorrectInputValuesToTheCalculatorWhenSuccessfulyLoadData()
         {
             ScatterInputData actualInputData = null;
             var expectedInputData = new ScatterInputData
@@ -91,8 +91,7 @@
             FakeScatterReportCalculator.Calculate(Arg.Do<ScatterInputData>(input => actualInputData = input)).ReturnsForAnyArgs(dummyReportData);
 
             ViewModel.LoadDataCommand.Execute("dummy.path");
-            ViewModel.Columns.First(column => column.Name.Equals("seven")).SelectionType = SelectionType.Abscissa;
-            ViewModel.Columns.First(column => column.Name.Equals("eight")).SelectionType = SelectionType.Ordinate;
+            SelectColumnsForReport("seven", "eight");
 
             ViewModel.GenerateReportDataCommand.Execute(null);
 
@@ -103,8 +102,7 @@
         public void CanExecute_ShouldReturnTrueWhenAbscissaAndOrdinateColumnsSelected()
         {
             ConfigureDataForCanExecuteTests();
-            ViewModel.Columns.First(column => column.Name.Equals("one")).SelectionType = SelectionType.Abscissa;
-            ViewModel.Columns.First(column => column.Name.Equals("three")).SelectionType = SelectionType.Ordinate;
+            SelectColumnsForReport("one", "three");
 
             var canExecute = ViewModel.GenerateReportDataCommand.CanExecute(null);
 

@@ -4,7 +4,6 @@
     using NSubstitute;
     using NUnit.Framework;
     using ReportTool.Reports;
-    using System;
     using System.Linq;
 
     [TestFixture]
