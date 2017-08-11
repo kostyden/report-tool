@@ -8,6 +8,7 @@
     using TestStack.White.UIItems.Finders;
 
     [TestFixture]
+    [Category("Acceptence tests")]
     class StartupTests
     {
         [Test]
