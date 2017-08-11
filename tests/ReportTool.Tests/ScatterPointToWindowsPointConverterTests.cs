@@ -56,6 +56,14 @@
             elementActualHeight = 200;
             expectedPoint = new Point(33.33, 33.33);
             yield return new TestCaseData(new object[] { originalPoint, minDataPoint, maxDataPoint, elementActualWdth, elementActualHeight }, expectedPoint);
+
+            originalPoint = new ScatterPoint(0, 0);
+            minDataPoint = new ScatterPoint(0, 0);
+            maxDataPoint = new ScatterPoint(0, 0);
+            elementActualWdth = 400;
+            elementActualHeight = 200;
+            expectedPoint = new Point(0, 0);
+            yield return new TestCaseData(new object[] { originalPoint, minDataPoint, maxDataPoint, elementActualWdth, elementActualHeight }, expectedPoint);
         }
 
 

@@ -15,8 +15,10 @@
             var actualWidth = (double)values[3];
             var actualHeight = (double)values[4];
 
-            var xCoefficent = actualWidth / (maxPoint.X - minPoint.X) / 2;
-            var yCoefficent = actualHeight / (maxPoint.Y - minPoint.Y) / 2;
+            var xRange = (maxPoint.X - minPoint.X);
+            var yRange = (maxPoint.Y - minPoint.Y);
+            var xCoefficent = xRange == 0 ? 0 : actualWidth / (maxPoint.X - minPoint.X);
+            var yCoefficent = yRange == 0 ? 0 : actualHeight / (maxPoint.Y - minPoint.Y);
 
             var scaledX = (plotPoint.X - minPoint.X) * xCoefficent;
             var scaledY = (plotPoint.Y - minPoint.Y) * yCoefficent;

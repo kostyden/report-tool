@@ -19,14 +19,17 @@
                 {
                     var sheet = document.WorkbookPart.WorksheetParts.First();
                     var sharedStrings = new List<string>();
-                    using (var reader = OpenXmlReader.Create(document.WorkbookPart.SharedStringTablePart))
+                    if (document.WorkbookPart.SharedStringTablePart != null)
                     {
-                        while (reader.Read())
+                        using (var reader = OpenXmlReader.Create(document.WorkbookPart.SharedStringTablePart))
                         {
-                            if (reader.ElementType == typeof(SharedStringItem))
+                            while (reader.Read())
                             {
-                                var item = (SharedStringItem)reader.LoadCurrentElement();
-                                sharedStrings.Add(item.Text.Text);
+                                if (reader.ElementType == typeof(SharedStringItem))
+                                {
+                                    var item = (SharedStringItem)reader.LoadCurrentElement();
+                                    sharedStrings.Add(item.Text.Text);
+                                }
                             }
                         }
                     }
@@ -53,11 +56,17 @@
                                 var cell = (Cell)reader.LoadCurrentElement();
                                 var columnHeader = new string(cell.CellReference.Value.TakeWhile(Char.IsLetter).ToArray());
 
-                                if (cell.DataType != null && cell.DataType == CellValues.SharedString && isFirstRowSaved.HasValue && isFirstRowSaved.Value == false)
+                                if (cell.DataType != null && (cell.DataType == CellValues.SharedString || cell.DataType == CellValues.InlineString) && isFirstRowSaved.HasValue && isFirstRowSaved.Value == false)
                                 {
-                                    int.TryParse(cell.CellValue.Text, out int textId);
-
-                                    columns.Add(columnHeader, sharedStrings.ElementAt(textId));
+                                    if (cell.DataType == CellValues.SharedString)
+                                    {
+                                        int.TryParse(cell.CellValue.Text, out int textId);
+                                        columns.Add(columnHeader, sharedStrings.ElementAt(textId));
+                                    }
+                                    else
+                                    {
+                                        columns.Add(columnHeader, cell.InnerText);
+                                    }
                                 }
                                 else if (isFirstRowSaved.HasValue && isFirstRowSaved.Value == true)
                                 {
@@ -67,7 +76,7 @@
                                         data.Add(currentRow);
                                     }
 
-                                    if (cell.DataType == null)
+                                    if (cell.DataType == null || cell.DataType == CellValues.Number)
                                     {
                                         var value = double.Parse(cell.CellValue.Text);
                                         var columnName = columns[columnHeader];
