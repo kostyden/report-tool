@@ -79,7 +79,6 @@
     <Compile Include="DataProviders\FileDataProviders\DataReaders\CsvDataReader.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\FileDataReader.cs" />
     <Compile Include="UI\ValueConverters\CoordinateType.cs" />
-    <Compile Include="UI\ViewModels\DataColumnViewModel.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaderProvider.cs" />
     <Compile Include="DataProviders\DataResult.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\ExcelDataReader.cs" />
@@ -90,7 +89,6 @@
     <Compile Include="DataProviders\IDataReaderProvider.cs" />
     <Compile Include="Reports\IScatterReportCalculator.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\JsonDataReader.cs" />
-    <Compile Include="UI\ViewModels\MainViewModel.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\NotSupportedDataReader.cs" />
     <Compile Include="Reports\ScatterInputData.cs" />
     <Compile Include="Reports\ScatterLine.cs" />
@@ -103,6 +101,8 @@
     <Compile Include="UI\SelectionType.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="DataProviders\FileDataProviders\SupportedFileExtensionAttribute.cs" />
+    <Compile Include="UI\ViewModels\DataColumnViewModel.cs" />
+    <Compile Include="UI\ViewModels\MainViewModel.cs" />
     <Compile Include="UI\ViewModels\ViewModel.cs" />
     <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
