@@ -1,5 +1,6 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.Reports
 {
+    using ReportTool.Reports;
     using System;
 
     public interface IScatterReportCalculator

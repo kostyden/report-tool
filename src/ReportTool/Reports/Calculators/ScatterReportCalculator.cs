@@ -1,4 +1,4 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.Reports.Calculators
 {
     using System.Collections.Generic;
     using System.Linq;

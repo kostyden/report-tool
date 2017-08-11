@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:local="clr-namespace:ReportTool"
-                    xmlns:converters="clr-namespace:ReportTool.ValueConverters">
+                    xmlns:converters="clr-namespace:ReportTool.ValueConverters"
+                    xmlns:reports="clr-namespace:ReportTool.Reports">
     <Color x:Key="AbscissaPrimaryColor">#0055B5</Color>
     <Color x:Key="AbscissaSecondaryColor">#0012B5</Color>
     <Color x:Key="OrdinatePrimaryColor">#FF6A00</Color>
@@ -77,7 +78,7 @@
         </Border>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type local:ScatterPoint}">
+    <DataTemplate DataType="{x:Type reports:ScatterPoint}">
         <Path Fill="Blue" ToolTip="{Binding Converter={StaticResource ScatterPointToText}}">
             <Path.Data>
                 <EllipseGeometry RadiusX="4" RadiusY="4">
@@ -94,8 +95,8 @@
             </Path.Data>
         </Path>
     </DataTemplate>
-    
-    <DataTemplate DataType="{x:Type local:ScatterLine}">
+
+    <DataTemplate DataType="{x:Type reports:ScatterLine}">
         <Line Stroke="Gold" StrokeThickness="2">
             <Line.X1>
                 <MultiBinding Converter="{StaticResource ScatterPointToXValue}">

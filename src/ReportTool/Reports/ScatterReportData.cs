@@ -1,4 +1,4 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.Reports
 {
     using System;
     using System.Collections.Generic;

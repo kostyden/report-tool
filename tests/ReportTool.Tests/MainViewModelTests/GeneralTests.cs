@@ -4,7 +4,7 @@
     using NSubstitute;
     using NUnit.Framework;
     using ReportTool.DataProviders;
-    using System;
+    using ReportTool.Reports;
     using System.Collections.Generic;
     using System.Linq;
 

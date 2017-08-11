@@ -2,7 +2,7 @@
 {
     using FluentAssertions;
     using NUnit.Framework;
-    using System;
+    using ReportTool.Reports;
     using System.Linq;
 
     [TestFixture]

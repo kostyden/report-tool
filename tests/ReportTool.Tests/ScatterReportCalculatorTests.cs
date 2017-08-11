@@ -3,6 +3,8 @@
     using FluentAssertions;
     using FluentAssertions.Equivalency;
     using NUnit.Framework;
+    using ReportTool.Reports;
+    using ReportTool.Reports.Calculators;
     using System.Collections.Generic;
     using System.Linq;
 

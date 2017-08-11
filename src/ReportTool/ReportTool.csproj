@@ -86,18 +86,18 @@
     <Compile Include="DataProviders\IDataProvider.cs" />
     <Compile Include="DataProviders\IDataReader.cs" />
     <Compile Include="DataProviders\IDataReaderProvider.cs" />
-    <Compile Include="IScatterReportCalculator.cs" />
+    <Compile Include="Reports\IScatterReportCalculator.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\JsonDataReader.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\NotSupportedDataReader.cs" />
-    <Compile Include="ScatterInputData.cs" />
-    <Compile Include="ScatterLine.cs" />
-    <Compile Include="ScatterPoint.cs" />
+    <Compile Include="Reports\ScatterInputData.cs" />
+    <Compile Include="Reports\ScatterLine.cs" />
+    <Compile Include="Reports\ScatterPoint.cs" />
     <Compile Include="ValueConverters\ScatterPointToTextConverter.cs" />
     <Compile Include="ValueConverters\ScatterPointToWindowsPointConverter.cs" />
     <Compile Include="ValueConverters\ScatterPointToCoordinateValueConverter.cs" />
-    <Compile Include="ScatterReportCalculator.cs" />
-    <Compile Include="ScatterReportData.cs" />
+    <Compile Include="Reports\Calculators\ScatterReportCalculator.cs" />
+    <Compile Include="Reports\ScatterReportData.cs" />
     <Compile Include="SelectionType.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="SupportedFileExtensionAttribute.cs" />
@@ -145,8 +145,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ScatterReport\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,6 @@
 ﻿namespace ReportTool.ValueConverters
 {
+    using ReportTool.Reports;
     using System;
     using System.Globalization;
     using System.Windows.Data;

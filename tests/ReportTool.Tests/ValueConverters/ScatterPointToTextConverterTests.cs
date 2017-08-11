@@ -2,6 +2,7 @@
 {
     using FluentAssertions;
     using NUnit.Framework;
+    using ReportTool.Reports;
     using ReportTool.ValueConverters;
     using System;
     using System.Globalization;
