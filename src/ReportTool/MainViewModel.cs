@@ -122,6 +122,10 @@
             var uniqueColumns = dataResult.Data.SelectMany(row => row.Keys).Distinct().Select(columnName => new DataColumnViewModel(columnName)).ToList();
             Columns = new ReadOnlyCollection<DataColumnViewModel>(uniqueColumns);
             ErrorMessage = dataResult.ErrorMessage;
+            Report = ScatterReportData.Empty;
+            RaisePropertyChanged(nameof(AbscissaColumnName));
+            RaisePropertyChanged(nameof(OrdinateColumnName));
+            ((Command)GenerateReportDataCommand).RaiseCanExecuteChanged();
         }
 
         private void GenerateReportData()

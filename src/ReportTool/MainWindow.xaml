@@ -7,13 +7,18 @@
         mc:Ignorable="d"
         Title="Report tool" Height="600" Width="800">
     <DockPanel LastChildFill="True">
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <TextBlock VerticalAlignment="Center" Margin="10">File:</TextBlock>
-            <TextBox x:Name="filePath" AutomationProperties.AutomationId="filePath" Width="320" Margin="10"/>
-            <Button AutomationProperties.AutomationId="loadData" Content="Load" Margin="10" Padding="10, 2" 
+        <Grid DockPanel.Dock="Top" Margin="0 36 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="10">File:</TextBlock>
+            <TextBox x:Name="filePath" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10"/>
+            <Button Grid.Column="2" Content="Load" Margin="10" Padding="10, 2" 
                     Command="{Binding LoadDataCommand}"
                     CommandParameter="{Binding Text, ElementName=filePath}"/>
-        </StackPanel>
+        </Grid>
         <Grid DockPanel.Dock="Top">
             <TextBlock HorizontalAlignment="Center" Foreground="DarkRed" FontWeight="Bold" Text="{Binding ErrorMessage}" />
         </Grid>
@@ -28,7 +33,7 @@
                 <ItemsControl ItemsSource="{Binding Columns}" ItemTemplate="{StaticResource DataColumnTemplate}">
                 </ItemsControl>
             </StackPanel>
-            <DockPanel LastChildFill="true">
+            <DockPanel LastChildFill="true" Margin="0 0 36 0">
                 <Border DockPanel.Dock="Bottom" Margin="36 0 0 0" Background="Transparent" BorderBrush="{StaticResource AbscissaPrimarySolidColorBrush}" BorderThickness="0 2 0 0">
                     <Grid>
                         <TextBlock HorizontalAlignment="Center" Margin="0 10" Text="{Binding AbscissaColumnName}"/>
