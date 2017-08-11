@@ -1,7 +1,6 @@
 ﻿namespace ReportTool.DataProviders.FileDataProviders.DataReaders
 {
     using ReportTool.DataProviders;
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
