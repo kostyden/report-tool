@@ -20,12 +20,18 @@
                 return ScatterLine.Zero;
             }
 
+            var (slope, offset) = CalculateSlopeAndOffsetFrom(points);            
+            return CreateLineFrom(points, slope, offset);
+        }
+
+        private (double slope, double offset) CalculateSlopeAndOffsetFrom(IEnumerable<ScatterPoint> points)
+        {
             var pointsAmount = points.Count();
-            var sumOfXYProduct = points.Sum(point => point.X * point.Y);
             var sumOfX = points.Sum(point => point.X);
             var sumOfY = points.Sum(point => point.Y);
+            var sumOfXYProduct = points.Sum(point => point.X * point.Y);
             var sumOfXSquare = points.Sum(point => point.X * point.X);
-            var squareOfsumOfX = points.Sum(point => point.X) * points.Sum(point => point.X);
+            var squareOfsumOfX = sumOfX * sumOfX;
 
             var slopeDividend = pointsAmount * sumOfXYProduct - sumOfX * sumOfY;
             var slopeDivisor = pointsAmount * sumOfXSquare - squareOfsumOfX;
@@ -35,12 +41,23 @@
             var offsetDividend = sumOfY - slope * sumOfX;
             var offset = offsetDividend / pointsAmount;
 
+            return (slope, offset);
+        }
+        
+        private ScatterLine CreateLineFrom(IEnumerable<ScatterPoint> points, double slope, double offset)
+        {
             var minXValue = points.Min(point => point.X);
             var maxXValue = points.Max(point => point.X);
 
-            var start = new ScatterPoint(minXValue, slope * minXValue + offset);
-            var end = new ScatterPoint(maxXValue, slope * maxXValue + offset);
+            var start = CalculateTrendLinePointFor(minXValue, slope, offset);
+            var end = CalculateTrendLinePointFor(maxXValue, slope, offset);
+
             return new ScatterLine(start, end);
+        }
+
+        private ScatterPoint CalculateTrendLinePointFor(double xValue, double slope, double offset)
+        {
+            return new ScatterPoint(xValue, slope * xValue + offset);
         }
     }
 }
