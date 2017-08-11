@@ -1,4 +1,4 @@
-﻿namespace ReportTool.Tests
+﻿namespace ReportTool.Tests.Reports.Calculators
 {
     using FluentAssertions;
     using FluentAssertions.Equivalency;

@@ -1,4 +1,4 @@
-﻿namespace ReportTool.Tests
+﻿namespace ReportTool.Tests.Reports
 {
     using FluentAssertions;
     using NUnit.Framework;

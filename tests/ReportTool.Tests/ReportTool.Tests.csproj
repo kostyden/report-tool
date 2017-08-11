@@ -80,8 +80,8 @@
     <Compile Include="ValueConverters\ScatterPointToCoordinateValueConverterTests.cs" />
     <Compile Include="ValueConverters\ScatterPointToTextConverterTests.cs" />
     <Compile Include="ValueConverters\ScatterPointToWindowsPointConverterTests.cs" />
-    <Compile Include="ScatterReportCalculatorTests.cs" />
-    <Compile Include="ScatterReportDataTests.cs" />
+    <Compile Include="Reports\Calculators\ScatterReportCalculatorTests.cs" />
+    <Compile Include="Reports\ScatterReportDataTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
