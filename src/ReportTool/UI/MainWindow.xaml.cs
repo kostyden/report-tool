@@ -1,4 +1,4 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.UI
 {
     using ReportTool.UI.ViewModels;
     using System.Windows;

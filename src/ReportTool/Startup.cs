@@ -26,7 +26,7 @@
             var application = new App();
             application.InitializeComponent();
 
-            var window = new MainWindow(viewmodel);
+            var window = new UI.MainWindow(viewmodel);
             application.Run(window);
         }
     }
