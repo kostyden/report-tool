@@ -93,9 +93,9 @@
     <Compile Include="ScatterInputData.cs" />
     <Compile Include="ScatterLine.cs" />
     <Compile Include="ScatterPoint.cs" />
-    <Compile Include="ScatterPointToTextConverter.cs" />
-    <Compile Include="ScatterPointToWindowsPointConverter.cs" />
-    <Compile Include="ScatterPointToCoordinateValueConverter.cs" />
+    <Compile Include="ValueConverters\ScatterPointToTextConverter.cs" />
+    <Compile Include="ValueConverters\ScatterPointToWindowsPointConverter.cs" />
+    <Compile Include="ValueConverters\ScatterPointToCoordinateValueConverter.cs" />
     <Compile Include="ScatterReportCalculator.cs" />
     <Compile Include="ScatterReportData.cs" />
     <Compile Include="SelectionType.cs" />

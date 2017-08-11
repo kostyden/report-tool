@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportTool.Tests", "tests\R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportTool", "src\ReportTool\ReportTool.csproj", "{C28D7D73-BE46-499E-A76D-12453DCDB5B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reports", "src\Reports\Reports.csproj", "{286E7712-9F8A-442E-9F96-FF1FEDB943D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C28D7D73-BE46-499E-A76D-12453DCDB5B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C28D7D73-BE46-499E-A76D-12453DCDB5B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C28D7D73-BE46-499E-A76D-12453DCDB5B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{286E7712-9F8A-442E-9F96-FF1FEDB943D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{286E7712-9F8A-442E-9F96-FF1FEDB943D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{286E7712-9F8A-442E-9F96-FF1FEDB943D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{286E7712-9F8A-442E-9F96-FF1FEDB943D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

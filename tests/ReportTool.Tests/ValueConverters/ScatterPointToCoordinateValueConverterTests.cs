@@ -1,8 +1,9 @@
-﻿namespace ReportTool.Tests
+﻿namespace ReportTool.Tests.ValueConverters
 {
     using FluentAssertions;
     using NSubstitute;
     using NUnit.Framework;
+    using ReportTool.ValueConverters;
     using System;
     using System.Collections.Generic;
     using System.Globalization;

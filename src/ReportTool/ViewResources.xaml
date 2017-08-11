@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                    xmlns:local="clr-namespace:ReportTool">
+                    xmlns:local="clr-namespace:ReportTool"
+                    xmlns:converters="clr-namespace:ReportTool.ValueConverters">
     <Color x:Key="AbscissaPrimaryColor">#0055B5</Color>
     <Color x:Key="AbscissaSecondaryColor">#0012B5</Color>
     <Color x:Key="OrdinatePrimaryColor">#FF6A00</Color>
@@ -19,10 +20,10 @@
     <SolidColorBrush x:Key="DefaultTextSolidColorBrush" Color="{StaticResource DefaultTextColor}"/>
     <SolidColorBrush x:Key="SelectedTexSolidColorBrush" Color="{StaticResource SelectedTextColor}" />
 
-    <local:ScatterPointToWindowsPointConverter x:Key="ScatterPointToWindowsPoint"/>
-    <local:ScatterPointToTextConverter x:Key="ScatterPointToText" />
-    <local:ScatterPointToCoordinateValueConverter x:Key="ScatterPointToXValue" Output="X" ScatterPointToWindowsPointConverter="{StaticResource ScatterPointToWindowsPoint}" />
-    <local:ScatterPointToCoordinateValueConverter x:Key="ScatterPointToYValue" Output="Y" ScatterPointToWindowsPointConverter="{StaticResource ScatterPointToWindowsPoint}" />
+    <converters:ScatterPointToWindowsPointConverter x:Key="ScatterPointToWindowsPoint"/>
+    <converters:ScatterPointToTextConverter x:Key="ScatterPointToText" />
+    <converters:ScatterPointToCoordinateValueConverter x:Key="ScatterPointToXValue" Output="X" ScatterPointToWindowsPointConverter="{StaticResource ScatterPointToWindowsPoint}" />
+    <converters:ScatterPointToCoordinateValueConverter x:Key="ScatterPointToYValue" Output="Y" ScatterPointToWindowsPointConverter="{StaticResource ScatterPointToWindowsPoint}" />
 
     <Style x:Key="DataColumnStyle" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{StaticResource NotSelectedPrimarySolidColorBrush}" />
