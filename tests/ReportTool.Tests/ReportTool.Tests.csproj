@@ -68,6 +68,7 @@
     <Compile Include="DataResultTests.cs" />
     <Compile Include="ExcelDataReaderTests.cs" />
     <Compile Include="FileDataProviderTests.cs" />
+    <Compile Include="JsonDataReaderTests.cs" />
     <Compile Include="MainViewModelTests\GenerateReportDataCommandTests.cs" />
     <Compile Include="MainViewModelTests\GeneralTests.cs" />
     <Compile Include="MainViewModelTests\LoadDataCommandTests.cs" />
@@ -91,6 +92,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DataReadersTestCases\ExcelDataReaderTestCase1.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="DataReadersTestCases\JsonDataReaderTestCase1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

@@ -1,0 +1,27 @@
+[
+    {
+        "weight": 150.05,
+        "speed": 220.15,
+        "tyre-consumption": 0.9845
+    },
+    {
+        "weight": 148.57,
+        "speed": 221.99,
+        "tyre-consumption": 0.9212
+    },
+    {
+        "weight": 146.98,
+        "speed": 225.05,
+        "tyre-consumption": 0.8601
+    },
+    {
+        "weight": 144.0,
+        "speed": 228.45,
+        "tyre-consumption": 0.7915
+    },
+    {
+        "weight": 143.05,
+        "speed": 120.98,
+        "tyre-consumption": 0.7801
+    }
+]
