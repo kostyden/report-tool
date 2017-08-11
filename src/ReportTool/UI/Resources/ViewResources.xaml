@@ -75,7 +75,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <StackPanel Orientation="Horizontal" Margin="10 6">
-                <TextBlock Text="{Binding Name}" Style="{StaticResource DataColumnText}"></TextBlock>
+                <TextBlock AutomationProperties.AutomationId="columnName" Text="{Binding Name}" Style="{StaticResource DataColumnText}"></TextBlock>
             </StackPanel>
         </Border>
     </DataTemplate>
