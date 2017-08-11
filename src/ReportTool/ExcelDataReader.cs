@@ -12,59 +12,84 @@
     {
         public DataResult Read(string path)
         {
-            var data = new List<Dictionary<string, double>>();
-            using (var document = SpreadsheetDocument.Open(path, false))
+            try
             {
-                var sheet = document.WorkbookPart.WorksheetParts.First();
-                var sharedStrings = new List<string>();
-                using (var reader = OpenXmlReader.Create(document.WorkbookPart.SharedStringTablePart))
+                var data = new List<Dictionary<string, double>>();
+                using (var document = SpreadsheetDocument.Open(path, false))
                 {
-                    while (reader.Read())
+                    var sheet = document.WorkbookPart.WorksheetParts.First();
+                    var sharedStrings = new List<string>();
+                    using (var reader = OpenXmlReader.Create(document.WorkbookPart.SharedStringTablePart))
                     {
-                        if (reader.ElementType == typeof(SharedStringItem))
+                        while (reader.Read())
                         {
-                            var item = (SharedStringItem)reader.LoadCurrentElement();
-                            sharedStrings.Add(item.Text.Text);
+                            if (reader.ElementType == typeof(SharedStringItem))
+                            {
+                                var item = (SharedStringItem)reader.LoadCurrentElement();
+                                sharedStrings.Add(item.Text.Text);
+                            }
                         }
                     }
-                }
 
-                var columns = new Dictionary<string, string>();
-                using (var reader = OpenXmlReader.Create(sheet))
-                {
-                    Dictionary<string, double> currentRow = null;
-                    while (reader.Read())
+                    var columns = new Dictionary<string, string>();
+                    using (var reader = OpenXmlReader.Create(sheet))
                     {
-                        if (reader.ElementType == typeof(Cell))
+                        Dictionary<string, double> currentRow = null;
+                        bool? isFirstRowSaved = null;
+                        while (reader.Read())
                         {
-                            var cell = (Cell)reader.LoadCurrentElement();
-                            var columnHeader = new string(cell.CellReference.Value.TakeWhile(Char.IsLetter).ToArray());
-
-                            if (cell.DataType != null && cell.DataType == CellValues.SharedString)
+                            if (reader.ElementType == typeof(Row) && reader.IsStartElement && isFirstRowSaved.HasValue == false)
                             {
-                                int.TryParse(cell.CellValue.Text, out int textId);
-
-                                columns.Add(columnHeader, sharedStrings.ElementAt(textId));
+                                isFirstRowSaved = false;
                             }
-                            else
+
+                            if (reader.ElementType == typeof(Row) && reader.IsEndElement && isFirstRowSaved.HasValue && isFirstRowSaved.Value == false)
                             {
-                                if (columnHeader.Equals("A"))
+                                isFirstRowSaved = true;
+                            }
+
+                            if (reader.ElementType == typeof(Cell))
+                            {
+                                var cell = (Cell)reader.LoadCurrentElement();
+                                var columnHeader = new string(cell.CellReference.Value.TakeWhile(Char.IsLetter).ToArray());
+
+                                if (cell.DataType != null && cell.DataType == CellValues.SharedString && isFirstRowSaved.HasValue && isFirstRowSaved.Value == false)
                                 {
-                                    currentRow = new Dictionary<string, double>();
-                                    data.Add(currentRow);
-                                }
+                                    int.TryParse(cell.CellValue.Text, out int textId);
 
-                                double.TryParse(cell.CellValue.Text, out double value);
-                                var columnName = columns[columnHeader];
-                                currentRow[columnName] = value;
+                                    columns.Add(columnHeader, sharedStrings.ElementAt(textId));
+                                }
+                                else if (isFirstRowSaved.HasValue && isFirstRowSaved.Value == true)
+                                {
+                                    if (columnHeader.Equals("A"))
+                                    {
+                                        currentRow = new Dictionary<string, double>();
+                                        data.Add(currentRow);
+                                    }
+
+                                    if (cell.DataType == null)
+                                    {
+                                        var value = double.Parse(cell.CellValue.Text);
+                                        var columnName = columns[columnHeader];
+                                        currentRow[columnName] = value;
+                                    }
+                                    else
+                                    {
+                                        throw new FormatException("String was not in a correct format");
+                                    }
+                                }
                             }
                         }
                     }
+
                 }
 
+                return DataResult.CreateSuccessful(data);
             }
-
-            return DataResult.CreateSuccessful(data);
+            catch (Exception exception)
+            {
+                return DataResult.CreateFailed(exception.Message);
+            }
         }
     }
 }

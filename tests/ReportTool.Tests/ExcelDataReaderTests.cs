@@ -34,5 +34,36 @@
 
             result.Data.ShouldBeEquivalentTo(expectedData);
         }
+
+        [Test]
+        public void Read_ShouldReturnFailedResultWithExpectedMessageWhenFileNotFound()
+        {
+            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
+            var fileName = @"DataReadersTestCases\NotExistedFile.xlsx";
+            var path = Path.Combine(directoryName, fileName);
+
+            var reader = new ExcelDataReader();
+
+            var result = reader.Read(path);
+
+            result.Data.Should().BeEmpty();
+            result.ErrorMessage.Should().ContainEquivalentOf("Could not find file");
+        }
+
+
+        [Test]
+        public void Read_ShouldReturnFailedResultWithExpectedMessageWhenValuesInWrongFormat()
+        {
+            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
+            var fileName = @"DataReadersTestCases\ExcelDataReaderTestCase2.xlsx";
+            var path = Path.Combine(directoryName, fileName);
+
+            var reader = new ExcelDataReader();
+
+            var result = reader.Read(path);
+
+            result.Data.Should().BeEmpty();
+            result.ErrorMessage.Should().ContainEquivalentOf("string was not in a correct format");
+        }
     }
 }
