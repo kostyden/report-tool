@@ -1,8 +1,8 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.Extensions
 {
     using System.Collections.Generic;
 
-    internal static class Extensions
+    internal static class IEnumerableExtensions
     {
         public static HashSet<T> ToSet<T>(this IEnumerable<T> source)
         {

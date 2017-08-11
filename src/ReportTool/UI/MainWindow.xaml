@@ -27,7 +27,7 @@
             <StackPanel DockPanel.Dock="Left" MinWidth="200">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Columns" Margin="10"/>
-                    <Button AutomationProperties.AutomationId="generateReportData" Content="Run" Margin="10" Padding="10, 2" 
+                    <Button AutomationProperties.AutomationId="generateReportData" Content="Generate" Margin="10" Padding="10, 2" 
                             Command="{Binding GenerateReportDataCommand}"/>
                 </StackPanel>
                 <ItemsControl ItemsSource="{Binding Columns}" ItemTemplate="{StaticResource DataColumnTemplate}">
@@ -48,10 +48,10 @@
                         </TextBlock>
                     </Grid>
                 </Border>
-                <ItemsControl x:Name="chartData" ItemsSource="{Binding ReportDataCollection}">
+                <ItemsControl ItemsSource="{Binding ReportDataCollection}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas x:Name="chartArea" Margin="12">
+                            <Canvas Margin="12">
                                 <Canvas.LayoutTransform>
                                     <ScaleTransform ScaleY="-1" />
                                 </Canvas.LayoutTransform>

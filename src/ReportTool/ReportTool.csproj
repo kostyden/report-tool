@@ -81,7 +81,7 @@
     <Compile Include="DataProviders\FileDataProviders\DataReaderProvider.cs" />
     <Compile Include="DataProviders\DataResult.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\ExcelDataReader.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="DataProviders\FileDataProviders\FileDataProvider.cs" />
     <Compile Include="DataProviders\IDataProvider.cs" />
     <Compile Include="DataProviders\IDataReader.cs" />

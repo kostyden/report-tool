@@ -2,6 +2,7 @@
 {
     using ReportTool.Commands;
     using ReportTool.DataProviders;
+    using ReportTool.Extensions;
     using ReportTool.Reports;
     using System;
     using System.Collections.Generic;
