@@ -50,7 +50,6 @@
             result.ErrorMessage.Should().ContainEquivalentOf("Could not find file");
         }
 
-
         [Test]
         public void Read_ShouldReturnFailedResultWithExpectedMessageWhenValuesInWrongFormat()
         {

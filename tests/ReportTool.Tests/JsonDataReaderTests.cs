@@ -36,5 +36,35 @@
 
             result.Data.ShouldBeEquivalentTo(expectedData);
         }
+
+        [Test]
+        public void Read_ShouldReturnFailedResultWithExpectedMessageWhenFileNotFound()
+        {
+            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
+            var fileName = @"DataReadersTestCases\NotExistedFile.json";
+            var path = Path.Combine(directoryName, fileName);
+
+            var reader = new JsonDataReader();
+
+            var result = reader.Read(path);
+
+            result.Data.Should().BeEmpty();
+            result.ErrorMessage.Should().ContainEquivalentOf("Could not find file");
+        }
+
+        [Test]
+        public void Read_ShouldReturnFailedResultWithExpectedMessageWhenValuesInWrongFormat()
+        {
+            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
+            var fileName = @"DataReadersTestCases\JsonDataReaderTestCase2.json";
+            var path = Path.Combine(directoryName, fileName);
+
+            var reader = new JsonDataReader();
+
+            var result = reader.Read(path);
+
+            result.Data.Should().BeEmpty();
+            result.ErrorMessage.Should().ContainEquivalentOf("could not convert string to double");
+        }
     }
 }

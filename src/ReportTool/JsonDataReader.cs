@@ -9,9 +9,17 @@
     {
         public DataResult Read(string path)
         {
-            var rawData = File.ReadAllText(path);
-            var data = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, double>>>(rawData);
-            return DataResult.CreateSuccessful(data);
+            try
+            {
+                var rawData = File.ReadAllText(path);
+                var data = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, double>>>(rawData);
+                return DataResult.CreateSuccessful(data);
+            }
+            catch (Exception exception)
+            {
+                return DataResult.CreateFailed(exception.Message);
+            }
+
         }
     }
 }

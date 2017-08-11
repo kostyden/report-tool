@@ -91,6 +91,9 @@
     <None Include="DataReadersTestCases\CsvDataReaderTestCase1TabDelimited.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="DataReadersTestCases\CsvDataReaderTestCase2CommaDelimited.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="DataReadersTestCases\ExcelDataReaderTestCase1.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -98,6 +101,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DataReadersTestCases\JsonDataReaderTestCase1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="DataReadersTestCases\JsonDataReaderTestCase2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

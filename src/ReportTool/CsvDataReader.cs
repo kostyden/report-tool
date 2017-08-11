@@ -17,28 +17,35 @@
 
         public DataResult Read(string path)
         {
-            var data = new List<Dictionary<string, double>>();
-            using (var reader = new StreamReader(path))
+            try
             {
-                List<string> columnsNames = null;
-                while(reader.EndOfStream == false)
+                var data = new List<Dictionary<string, double>>();
+                using (var reader = new StreamReader(path))
                 {
-                    if (columnsNames == null)
+                    List<string> columnsNames = null;
+                    while (reader.EndOfStream == false)
                     {
-                        columnsNames = reader.ReadLine().Split(_delimeter).ToList();
-                        
-                    }
-                    else
-                    {
-                        var values = Array.ConvertAll(reader.ReadLine().Split(_delimeter), value => double.Parse(value))
-                                          .Select((value, index) => new { Value = value, Index = index })
-                                          .ToDictionary(info => columnsNames[info.Index], info => info.Value);
-                        data.Add(values);
+                        if (columnsNames == null)
+                        {
+                            columnsNames = reader.ReadLine().Split(_delimeter).ToList();
+
+                        }
+                        else
+                        {
+                            var values = Array.ConvertAll(reader.ReadLine().Split(_delimeter), value => double.Parse(value))
+                                              .Select((value, index) => new { Value = value, Index = index })
+                                              .ToDictionary(info => columnsNames[info.Index], info => info.Value);
+                            data.Add(values);
+                        }
                     }
                 }
-            }
 
-            return DataResult.CreateSuccessful(data);
+                return DataResult.CreateSuccessful(data);
+            }
+            catch (Exception exception)
+            {
+                return DataResult.CreateFailed(exception.Message);
+            }
         }
     }
 }
