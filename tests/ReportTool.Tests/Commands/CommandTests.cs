@@ -78,7 +78,7 @@
         [Test]
         [TestCase("")]
         [TestCase(null)]
-        public void CanExecute_ShouldReturnTrueWhenCommandConstructedWithoneParameter(object dummyParameter)
+        public void CanExecute_ShouldReturnTrueWhenCommandConstructedWithOneParameter(object dummyParameter)
         {
             Action<object> action = param => { };
             var command = new Command(action);

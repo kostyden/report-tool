@@ -4,10 +4,7 @@
     using NUnit.Framework;
     using ReportTool.DataProviders.FileDataProviders;
     using ReportTool.DataProviders.FileDataProviders.DataReaders;
-    using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Reflection;
 
     [TestFixture]
     class CsvDataReaderTests
@@ -23,8 +20,7 @@
         [TestCase(@"DataReadersTestCases\CsvDataReaderTestCase1CommaDelimited.csv", ',')]
         public void Read_ShouldReturnSuccessfulResultWithExpectedData(string fileName, char delimeter)
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var path = Path.Combine(directoryName, fileName);
+            var path = TestUtils.BuildPathFor(fileName);
             var expectedData = new[]
             {
                 new Dictionary<string, double> {{ "one", 0.4 }, { "two", 11.03 }, { "three", 13.333 } },
@@ -41,10 +37,7 @@
         [Test]
         public void Read_ShouldReturnFailedResultWithExpectedMessageWhenFileNotFound()
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var fileName = @"DataReadersTestCases\NotExistedFile.csv";
-            var path = Path.Combine(directoryName, fileName);
-
+            var path = TestUtils.BuildPathFor(@"DataReadersTestCases\NotExistedFile.csv");
             var reader = new CsvDataReader(';');
 
             var result = reader.Read(path);
@@ -56,10 +49,7 @@
         [Test]
         public void Read_ShouldReturnFailedResultWithExpectedMessageWhenValuesInWrongFormat()
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var fileName = @"DataReadersTestCases\CsvDataReaderTestCase2CommaDelimited.csv";
-            var path = Path.Combine(directoryName, fileName);
-
+            var path = TestUtils.BuildPathFor(@"DataReadersTestCases\CsvDataReaderTestCase2CommaDelimited.csv");
             var reader = new CsvDataReader(',');
 
             var result = reader.Read(path);

@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Commands\CommandTests.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\CsvDataReaderTests.cs" />
+    <Compile Include="TestUtils.cs" />
     <Compile Include="UI\ViewModels\DataColumnViewModelTests.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaderProviderTests.cs" />
     <Compile Include="DataProviders\DataResultTests.cs" />

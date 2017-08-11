@@ -1,7 +1,6 @@
 ﻿namespace ReportTool.Tests.Reports.Calculators
 {
     using FluentAssertions;
-    using FluentAssertions.Equivalency;
     using NUnit.Framework;
     using ReportTool.Reports;
     using ReportTool.Reports.Calculators;
@@ -10,9 +9,7 @@
 
     [TestFixture]
     class ScatterReportCalculatorTests
-    {
-        private const double APPROXIMATION_PRECISION = 0.01;
-
+    {      
         private ScatterReportCalculator _calculator;
 
         [SetUp]
@@ -132,16 +129,7 @@
         private void AssertThatTrendLineCalculatedCorrectly(ScatterInputData inputData, ScatterLine expectedLine)
         {
             var actualReport = _calculator.Calculate(inputData);
-
-            actualReport.TrendLine.ShouldBeEquivalentTo(
-                expectedLine, 
-                config => PointShouldBeEqualApproximately(config));
-        }
-
-        private EquivalencyAssertionOptions<ScatterLine> PointShouldBeEqualApproximately(EquivalencyAssertionOptions<ScatterLine> config)
-        {
-            return config.Using<double>(context => context.Subject.Should().BeApproximately(context.Expectation, APPROXIMATION_PRECISION))
-                         .WhenTypeIs<double>();
+            actualReport.TrendLine.ShouldBeEquivalentTo(expectedLine, TestUtils.DoubleShouldBeEqualApproximately);
         }
     }
 }

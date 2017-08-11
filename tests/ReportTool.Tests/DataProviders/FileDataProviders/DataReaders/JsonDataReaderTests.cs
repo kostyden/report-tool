@@ -4,10 +4,7 @@
     using NUnit.Framework;
     using ReportTool.DataProviders.FileDataProviders;
     using ReportTool.DataProviders.FileDataProviders.DataReaders;
-    using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Reflection;
 
     [TestFixture]
     class JsonDataReaderTests
@@ -21,9 +18,7 @@
         [Test]
         public void Read_ShouldReturnSuccessfulResultWithExpectedData()
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var fileName = @"DataReadersTestCases\JsonDataReaderTestCase1.json";
-            var path = Path.Combine(directoryName, fileName);
+            var path = TestUtils.BuildPathFor(@"DataReadersTestCases\JsonDataReaderTestCase1.json");
             var expectedData = new[]
             {
                 new Dictionary<string, double> {{ "weight", 150.05 }, { "speed", 220.15 }, { "tyre-consumption", 0.9845 } },
@@ -42,9 +37,7 @@
         [Test]
         public void Read_ShouldReturnFailedResultWithExpectedMessageWhenFileNotFound()
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var fileName = @"DataReadersTestCases\NotExistedFile.json";
-            var path = Path.Combine(directoryName, fileName);
+            var path = TestUtils.BuildPathFor(@"DataReadersTestCases\NotExistedFile.json");
 
             var reader = new JsonDataReader();
 
@@ -57,10 +50,7 @@
         [Test]
         public void Read_ShouldReturnFailedResultWithExpectedMessageWhenValuesInWrongFormat()
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var fileName = @"DataReadersTestCases\JsonDataReaderTestCase2.json";
-            var path = Path.Combine(directoryName, fileName);
-
+            var path = TestUtils.BuildPathFor(@"DataReadersTestCases\JsonDataReaderTestCase2.json");
             var reader = new JsonDataReader();
 
             var result = reader.Read(path);

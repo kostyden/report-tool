@@ -5,7 +5,6 @@
     using NUnit.Framework;
     using ReportTool.DataProviders;
     using ReportTool.DataProviders.FileDataProviders;
-    using System;
     using System.Collections.Generic;
 
     [TestFixture]
@@ -49,7 +48,7 @@
 
         [Test]
         [TestCase("testFile", ".test", "File not found")]
-        [TestCase("anotherFile", ".com", "Reader bot found for this extension")]
+        [TestCase("anotherFile", ".com", "Reader not found for this extension")]
         public void GetFrom_ShouldReturnFailedResultWithMessageProvidedByDataReader(string fileName, string fileExtension, string errorMessage)
         {
             var path = $"{fileName}.{fileExtension}";

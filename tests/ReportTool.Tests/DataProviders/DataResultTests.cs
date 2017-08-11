@@ -1,6 +1,5 @@
 ﻿namespace ReportTool.Tests.DataProviders
 {
-    using System;
     using NUnit.Framework;
     using System.Collections.Generic;
     using FluentAssertions;

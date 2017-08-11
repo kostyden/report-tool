@@ -5,10 +5,7 @@
     using ReportTool.DataProviders;
     using ReportTool.DataProviders.FileDataProviders;
     using ReportTool.DataProviders.FileDataProviders.DataReaders;
-    using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Reflection;
 
     [TestFixture]
     class ExcelDataReaderTests
@@ -22,9 +19,7 @@
         [Test]
         public void Read_ShouldReturnSuccessfulResultWithExpectedData()
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var fileName = @"DataReadersTestCases\ExcelDataReaderTestCase1.xlsx";
-            var path = Path.Combine(directoryName, fileName);
+            var path = TestUtils.BuildPathFor(@"DataReadersTestCases\ExcelDataReaderTestCase1.xlsx");
             var data = new[]
             {
                 new Dictionary<string, double> {{ "one", 1.1 }, { "two", 1.2 }, { "three", 1.3 } },
@@ -42,9 +37,7 @@
         [Test]
         public void Read_ShouldReturnSuccessfulResultWithExpectedDataWhenFileInProtectedView()
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var fileName = @"DataReadersTestCases\ExcelDataReaderTestCase3ProtectedView.xlsx";
-            var path = Path.Combine(directoryName, fileName);
+            var path = TestUtils.BuildPathFor(@"DataReadersTestCases\ExcelDataReaderTestCase3ProtectedView.xlsx");
             var data = new[]
             {
                 new Dictionary<string, double> {{ "one", 30.24 }, { "two", 256 }, { "three", 0.4099 }},
@@ -62,10 +55,7 @@
         [Test]
         public void Read_ShouldReturnFailedResultWithExpectedMessageWhenFileNotFound()
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var fileName = @"DataReadersTestCases\NotExistedFile.xlsx";
-            var path = Path.Combine(directoryName, fileName);
-
+            var path = TestUtils.BuildPathFor(@"DataReadersTestCases\NotExistedFile.xlsx");
             var reader = new ExcelDataReader();
 
             var result = reader.Read(path);
@@ -77,10 +67,7 @@
         [Test]
         public void Read_ShouldReturnFailedResultWithExpectedMessageWhenValuesInWrongFormat()
         {
-            var directoryName = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
-            var fileName = @"DataReadersTestCases\ExcelDataReaderTestCase2.xlsx";
-            var path = Path.Combine(directoryName, fileName);
-
+            var path = TestUtils.BuildPathFor(@"DataReadersTestCases\ExcelDataReaderTestCase2.xlsx");
             var reader = new ExcelDataReader();
 
             var result = reader.Read(path);

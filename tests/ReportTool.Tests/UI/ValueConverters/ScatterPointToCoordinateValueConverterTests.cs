@@ -41,7 +41,7 @@
 
             var actualValue = (double)_converter.Convert(inputValues, typeof(double), null, CultureInfo.CurrentCulture);
 
-            actualValue.Should().BeApproximately(convertedPoint.X, 0.01);
+            actualValue.Should().BeApproximately(convertedPoint.X, TestUtils.APPROXIMATION_PRECISION);
         }
 
         private static IEnumerable<TestCaseData> GetTestCasesForConvertion()

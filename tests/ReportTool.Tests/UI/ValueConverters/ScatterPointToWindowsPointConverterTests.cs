@@ -27,10 +27,7 @@
         {
             var actualPoint = _converter.Convert(inputValues, typeof(Point), null, CultureInfo.CurrentCulture);
 
-            actualPoint.ShouldBeEquivalentTo(
-                expectedPoint, 
-                config => config.Using<double>(context => context.Subject.Should().BeApproximately(context.Expectation, 0.1))
-                                .WhenTypeIs<double>());
+            actualPoint.ShouldBeEquivalentTo(expectedPoint, TestUtils.DoubleShouldBeEqualApproximately);
         }
 
         private static IEnumerable<TestCaseData> GetTestCasesForConvertion()
