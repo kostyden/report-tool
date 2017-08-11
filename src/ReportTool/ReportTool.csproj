@@ -77,6 +77,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\Command.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\CsvDataReader.cs" />
+    <Compile Include="DataProviders\FileDataProviders\DataReaders\FileDataReader.cs" />
     <Compile Include="UI\VIewModels\DataColumnViewModel.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaderProvider.cs" />
     <Compile Include="DataProviders\DataResult.cs" />
