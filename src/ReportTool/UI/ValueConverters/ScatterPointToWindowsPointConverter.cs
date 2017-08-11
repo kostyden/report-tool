@@ -18,18 +18,28 @@
 
             var xRange = (maxPoint.X - minPoint.X);
             var yRange = (maxPoint.Y - minPoint.Y);
-            var xCoefficent = xRange == 0 ? 0 : actualWidth / (maxPoint.X - minPoint.X);
-            var yCoefficent = yRange == 0 ? 0 : actualHeight / (maxPoint.Y - minPoint.Y);
+            var xCoefficent = CalculateCoefficentFor(actualWidth, xRange);
+            var yCoefficent = CalculateCoefficentFor(actualHeight, yRange);
 
-            var scaledX = (plotPoint.X - minPoint.X) * xCoefficent;
-            var scaledY = (plotPoint.Y - minPoint.Y) * yCoefficent;
+            var convertedX = (plotPoint.X - minPoint.X) * xCoefficent;
+            var convertedY = (plotPoint.Y - minPoint.Y) * yCoefficent;
 
-            return new Point(scaledX, scaledY);
+            return new Point(convertedX, convertedY);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+
+        private double CalculateCoefficentFor(double actualRange, double givenRange)
+        {
+            if (givenRange == 0)
+            {
+                return 0;
+            }
+
+            return actualRange / givenRange;
         }
     }
 }

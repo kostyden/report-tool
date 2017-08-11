@@ -30,10 +30,4 @@
             throw new NotImplementedException();
         }
     }
-
-    public enum CoordinateType
-    {
-        X = 0,
-        Y = 1
-    }
 }
