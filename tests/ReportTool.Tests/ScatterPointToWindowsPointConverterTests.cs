@@ -38,7 +38,7 @@
             var maxDataPoint = new ScatterPoint(50, 20);
             var elementActualWdth = 800.0;
             var elementActualHeight = 600.0;
-            var expectedPoint = new Point(100, 100);
+            var expectedPoint = new Point(200, 200);
             yield return new TestCaseData(new object[] { originalPoint, minDataPoint, maxDataPoint, elementActualWdth, elementActualHeight }, expectedPoint);
 
             originalPoint = new ScatterPoint(1, 7);
@@ -46,7 +46,7 @@
             maxDataPoint = new ScatterPoint(100, 10);
             elementActualWdth = 560;
             elementActualHeight = 210;
-            expectedPoint = new Point(2.8, 73.5);
+            expectedPoint = new Point(5.6, 147.0);
             yield return new TestCaseData(new object[] { originalPoint, minDataPoint, maxDataPoint, elementActualWdth, elementActualHeight }, expectedPoint);
 
             originalPoint = new ScatterPoint(0, 0);
@@ -54,7 +54,7 @@
             maxDataPoint = new ScatterPoint(100, 20);
             elementActualWdth = 400;
             elementActualHeight = 200;
-            expectedPoint = new Point(33.33, 33.33);
+            expectedPoint = new Point(66.66, 66.66);
             yield return new TestCaseData(new object[] { originalPoint, minDataPoint, maxDataPoint, elementActualWdth, elementActualHeight }, expectedPoint);
 
             originalPoint = new ScatterPoint(0, 0);
