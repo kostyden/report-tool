@@ -61,7 +61,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandTests.cs" />
+    <Compile Include="Commands\CommandTests.cs" />
     <Compile Include="CsvDataReaderTests.cs" />
     <Compile Include="DataColumnViewModelTests.cs" />
     <Compile Include="DataReaderProviderTests.cs" />

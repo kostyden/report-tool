@@ -1,4 +1,4 @@
-﻿namespace ReportTool
+﻿namespace ReportTool.Commands
 {
     using System;
     using System.Windows.Input;

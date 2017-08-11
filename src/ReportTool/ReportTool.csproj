@@ -75,7 +75,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Command.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="CsvDataReader.cs" />
     <Compile Include="DataColumnViewModel.cs" />
     <Compile Include="DataReaderProvider.cs" />

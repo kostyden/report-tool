@@ -1,7 +1,8 @@
-﻿namespace ReportTool.Tests
+﻿namespace ReportTool.Tests.Commands
 {
     using FluentAssertions;
     using NUnit.Framework;
+    using ReportTool.Commands;
     using System;
 
     [TestFixture]
