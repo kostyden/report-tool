@@ -1,4 +1,4 @@
-﻿namespace ReportTool.Commands
+﻿namespace ReportTool.UI.Commands
 {
     using System;
     using System.Windows.Input;

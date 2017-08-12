@@ -67,7 +67,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CommandTests.cs" />
+    <Compile Include="UI\Commands\CommandTests.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\CsvDataReaderTests.cs" />
     <Compile Include="StartupTests.cs" />
     <Compile Include="TestUtils.cs" />

@@ -75,7 +75,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\Command.cs" />
+    <Compile Include="UI\Commands\Command.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\CsvDataReader.cs" />
     <Compile Include="DataProviders\FileDataProviders\DataReaders\FileDataReader.cs" />
     <Compile Include="UI\ValueConverters\CoordinateType.cs" />

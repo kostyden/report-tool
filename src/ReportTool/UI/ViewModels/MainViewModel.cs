@@ -1,6 +1,6 @@
 ﻿namespace ReportTool.UI.ViewModels
 {
-    using ReportTool.Commands;
+    using ReportTool.UI.Commands;
     using ReportTool.DataProviders;
     using ReportTool.Extensions;
     using ReportTool.Reports;
